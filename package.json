@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "node server.js",
-    "prod": "node server.js"
+    "prod": "prisma generate && node server.js"
   },
   "dependencies": {
     "@prisma/client": "^3.6.0",
