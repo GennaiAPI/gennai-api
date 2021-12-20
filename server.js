@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { StarWarsAPI } from './apis/starWarsApi.js'
+import cors from 'cors';
 import express from 'express';
 import http from 'http';
 import resolvers from './resolvers.js';
@@ -8,8 +9,14 @@ import typeDefs from './schema/index.js';
 
 const startServer = async () => {
   const app = express();
-  const httpServer = http.createServer(app);
 
+  var corsOptions = {
+    origin: "*",
+    preflightContinue: true
+  };
+  app.use(cors(corsOptions))
+
+  const httpServer = http.createServer(app);
 
   const server = new ApolloServer({
     typeDefs, resolvers, plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
