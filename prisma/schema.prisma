@@ -1,0 +1,151 @@
+datasource db {
+  url      = "postgresql://postgres:postgres@localhost:5432/postgres?schema=gennai"
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Family {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique @db.VarChar(255)
+  symbol      String    @db.VarChar(255)
+  description String
+  digimons    Digimon[]
+}
+
+model Rank {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  description String
+  digimons    Digimon[]
+}
+
+model Attribute {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(255)
+  symbol      String      @db.VarChar(255)
+  description String
+  strong      Attribute[] @relation("AttrWeakStrong", references: [id])
+  weak        Attribute[] @relation("AttrWeakStrong", references: [id])
+  digimons    Digimon[]
+}
+
+model Element {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(255)
+  strong   Element[] @relation("ElemWeakStrong", references: [id])
+  weak     Element[] @relation("ElemWeakStrong", references: [id])
+  digimons Digimon[]
+}
+
+model Digimon {
+  id           Int         @id @default(autoincrement())
+  name         String      @unique @db.VarChar(255)
+  prior        Digimon[]   @relation("PriorNext", references: [id])
+  next         Digimon[]   @relation("PriorNext", references: [id])
+  rank         Rank        @relation(fields: [rankId], references: [id])
+  rankId       Int
+  attribute    Attribute   @relation(fields: [attributeId], references: [id])
+  attributeId  Int
+  family       Family[]
+  element      Element?    @relation(fields: [elementId], references: [id])
+  elementId    Int?
+  anime        Anime[]
+  episodes     Episode[]
+  movies       Movie[]
+  digimental   Digimental? @relation(fields: [digimentalId], references: [id])
+  digimentalId Int?
+}
+
+model Universe {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(255)
+  animes     Anime[]
+  movies     Movie[]
+  characters Character[]
+}
+
+model Anime {
+  id         Int         @id @default(autoincrement())
+  episodes   Episode[]
+  digimons   Digimon[]
+  digivices  Digivice[]
+  characters Character[]
+  crests     Crest[]
+  universe   Universe    @relation(fields: [universeId], references: [id])
+  universeId Int
+}
+
+model Episode {
+  id              Int         @id @default(autoincrement())
+  title           String      @db.VarChar(255)
+  synopsis        String
+  originalAirDate DateTime
+  anime           Anime       @relation(fields: [animeId], references: [id])
+  animeId         Int
+  characters      Character[]
+  digimons        Digimon[]
+}
+
+model Movie {
+  id              Int         @id @default(autoincrement())
+  title           String      @db.VarChar(255)
+  synopsis        String
+  originalAirDate DateTime
+  universe        Universe    @relation(fields: [universeId], references: [id])
+  universeId      Int
+  characters      Character[]
+  digimons        Digimon[]
+  digivices       Digivice[]
+}
+
+model Character {
+  id             Int         @id @default(autoincrement())
+  name           String      @db.VarChar(255)
+  isDigiDestined Boolean
+  animes         Anime[]
+  digivices      Digivice[]
+  crest          Crest?
+  digimental     Digimental?
+  universes      Universe[]
+  episodes       Episode[]
+  movies         Movie[]
+}
+
+model Digivice {
+  id             Int          @id @default(autoincrement())
+  digiDestined   Character    @relation(fields: [digiDestinedId], references: [id])
+  digiDestinedId Int
+  colors         String[]     @db.VarChar(255)
+  type           DigiviceType
+  animes         Anime[]
+  movies         Movie[]
+}
+
+enum DigiviceType {
+  CLASSIC
+  D_3
+}
+
+model Crest {
+  id             Int        @id @default(autoincrement())
+  name           String     @db.VarChar(255)
+  description    String
+  digiDestined   Character  @relation(fields: [digiDestinedId], references: [id])
+  digiDestinedId Int        @unique
+  animes         Anime[]
+  digimental     Digimental @relation(fields: [digimentalId], references: [id])
+  digimentalId   Int        @unique
+}
+
+model Digimental {
+  id             Int       @id @default(autoincrement())
+  name           String    @db.VarChar(255)
+  description    String
+  digiDestined   Character @relation(fields: [digiDestinedId], references: [id])
+  digiDestinedId Int       @unique
+  digimons       Digimon[]
+  crest          Crest?
+}

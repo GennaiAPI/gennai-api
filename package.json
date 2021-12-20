@@ -1,0 +1,16 @@
+{
+  "name": "gennai",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.6.0",
+    "apollo-datasource-rest": "^3.4.0",
+    "apollo-server": "^3.5.0",
+    "graphql": "^16.1.0"
+  }
+}
