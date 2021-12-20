@@ -1,5 +1,4 @@
 datasource db {
-  // url      = "postgresql://postgres:postgres@localhost:5432/postgres?schema=gennai"
   url      = env("DATABASE_URL")
   provider = "postgresql"
 }
