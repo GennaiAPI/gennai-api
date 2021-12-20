@@ -19,7 +19,7 @@ const startServer = async () => {
 
   server.applyMiddleware({
     app,
-
+    cors: false,
     // By default, apollo-server hosts its GraphQL endpoint at the
     // server root. However, *other* Apollo Server packages host it at
     // /graphql. Optionally provide this to match apollo-server.
