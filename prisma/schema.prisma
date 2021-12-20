@@ -49,10 +49,10 @@ model Digimon {
   rankId       Int
   attribute    Attribute   @relation(fields: [attributeId], references: [id])
   attributeId  Int
-  family       Family[]
+  families     Family[]
   element      Element?    @relation(fields: [elementId], references: [id])
   elementId    Int?
-  anime        Anime[]
+  animes       Anime[]
   episodes     Episode[]
   movies       Movie[]
   digimental   Digimental? @relation(fields: [digimentalId], references: [id])
@@ -68,14 +68,17 @@ model Universe {
 }
 
 model Anime {
-  id         Int         @id @default(autoincrement())
-  episodes   Episode[]
-  digimons   Digimon[]
-  digivices  Digivice[]
-  characters Character[]
-  crests     Crest[]
-  universe   Universe    @relation(fields: [universeId], references: [id])
-  universeId Int
+  id              Int         @id @default(autoincrement())
+  title           String      @db.VarChar(255)
+  synopsis        String
+  originalAirDate DateTime
+  episodes        Episode[]
+  digimons        Digimon[]
+  digivices       Digivice[]
+  characters      Character[]
+  crests          Crest[]
+  universe        Universe    @relation(fields: [universeId], references: [id])
+  universeId      Int
 }
 
 model Episode {

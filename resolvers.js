@@ -1,5 +1,3 @@
-import { authors, books } from './db.js'
-
 import Prisma from '@prisma/client/index.js'
 import { dateScalar } from './schema/customScalars.js';
 

@@ -71,8 +71,17 @@ const typeDefs = gql`
     prior: [Digimon]
     next: [Digimon]
     rank: Rank
+    rankId: Int
     attribute: Attribute
+    attributeId: Int
     families: [Family]
+    element: Element
+    elementId: Int
+    animes: [Anime]
+    episodes: [Episode]
+    movies: [Movie]
+    digimental: Digimental
+    digimentalId: Int
   }
 
   input DigimonInput {
@@ -80,20 +89,78 @@ const typeDefs = gql`
     prior: [DigimonInput]
     next: [DigimonInput]
     rank: RankInput
+    rankId: Int
     attribute: AttributeInput
+    attributeId: Int
     families: [FamilyInput]
+    element: ElementInput
+    elementId: Int
+    animes: [AnimeInput]
+    episodes: [EpisodeInput]
+    movies: [MovieInput]
+    digimental: DigimentalInput
+    digimentalId: Int
   }
 
   type Universe {
-    
+    id: ID!
+    name: String
+    animes: [Anime]
+    movies: [Movie]
+    characters: [Character]
+  }
+
+  input UniverseInput {
+    name: String
+    animes: [AnimeInput]
+    movies: [MovieInput]
+    characters: [CharacterInput]
   }
   
   type Anime {
+    id: ID!
+    title: String
+    synopsis: String
+    originalAirDate: Date
+    episodes: [Episode]
+    digimons: [Digimon]
+    digivices: [Digivice]
+    characters: [Character]
+    crests: [Crest]
+    universe: Universe
+    universeId: Int
+  }
 
+  input AnimeInput {
+    title: String
+    synopsis: String
+    originalAirDate: Date
+    episodes: [EpisodeInput]
+    digimons: [DigimonInput]
+    digivices: [DigiviceInput]
+    characters: [CharacterInput]
+    crests: [CrestInput]
+    universe: UniverseInput
   }
   
   type Episode {
-
+    id: ID!
+    title: String
+    synopsis: String
+    originalAirDate: Date
+    anime: Anime
+    animeId: Int
+    characters: [Character]
+    digimons: [Digimon]
+  }
+  
+  input EpisodeInput {
+    title: String
+    synopsis: String
+    originalAirDate: Date
+    anime: AnimeInput
+    characters: [CharacterInput]
+    digimons: [DigimonInput]
   }
   
   type Movie {
