@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "node server.js",
-    "heroku-postbuild": "npx prisma introspect && npx prisma generate",
+    "heroku-postbuild": "npx prisma generate",
     "prod": "node server.js"
   },
   "dependencies": {
