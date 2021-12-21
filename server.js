@@ -10,11 +10,6 @@ import typeDefs from './schema/index.js';
 const startServer = async () => {
   const app = express();
 
-  var corsOptions = {
-    origin: true,
-    preflightContinue: true,
-    credentials: true
-  };
   // app.use(cors(corsOptions))
 
   const httpServer = http.createServer(app);
@@ -27,7 +22,12 @@ const startServer = async () => {
 
   server.applyMiddleware({
     app,
-    cors: corsOptions,
+    cors: {
+      origin: "*",
+      preflightContinue: true,
+      credentials: true,
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS"
+    },
     // By default, apollo-server hosts its GraphQL endpoint at the
     // server root. However, *other* Apollo Server packages host it at
     // /graphql. Optionally provide this to match apollo-server.
