@@ -12,7 +12,8 @@ const startServer = async () => {
 
   var corsOptions = {
     origin: "*",
-    preflightContinue: true
+    preflightContinue: true,
+    credentials: true
   };
   app.use(cors(corsOptions))
 
