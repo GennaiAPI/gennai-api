@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import { StarWarsAPI } from './apis/starWarsApi.js'
-import cors from 'cors';
+// import cors from 'cors';
 import express from 'express';
 import http from 'http';
 import resolvers from './resolvers.js';
@@ -11,11 +11,11 @@ const startServer = async () => {
   const app = express();
 
   var corsOptions = {
-    origin: "*",
+    origin: true,
     preflightContinue: true,
     credentials: true
   };
-  app.use(cors(corsOptions))
+  // app.use(cors(corsOptions))
 
   const httpServer = http.createServer(app);
 
@@ -27,7 +27,7 @@ const startServer = async () => {
 
   server.applyMiddleware({
     app,
-    cors: false,
+    cors: corsOptions,
     // By default, apollo-server hosts its GraphQL endpoint at the
     // server root. However, *other* Apollo Server packages host it at
     // /graphql. Optionally provide this to match apollo-server.
