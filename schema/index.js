@@ -78,8 +78,8 @@ const typeDefs = gql`
     # rankId: Int
     attribute: Attribute
     # attributeId: Int
-    families: [Family]
     element: Element
+    families: [Family]
     # elementId: Int
     animes: [Anime]
     episodes: [Episode]
@@ -106,7 +106,7 @@ const typeDefs = gql`
     digimental: DigimentalInput
     # digimentalId: Int
   }
-
+  
   type Universe {
     id: ID!
     name: String

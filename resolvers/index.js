@@ -341,6 +341,86 @@ const resolvers = {
       }
     }),
   },
+  Family: {
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        family: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    })
+  },
+  Rank: {
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        rank: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    })
+  },
+  Attribute: {
+    strong: (parent, args, ctx, info) => prisma.attribute.findMany({
+      where: {
+        weak: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    weak: (parent, args, ctx, info) => prisma.attribute.findMany({
+      where: {
+        strong: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        attribute: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    })
+  },
+  Element: {
+    strong: (parent, args, ctx, info) => prisma.element.findMany({
+      where: {
+        weak: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    weak: (parent, args, ctx, info) => prisma.element.findMany({
+      where: {
+        strong: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        element: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    })
+  },
   Digimon: {
     prior: (parent, args, ctx, info) => prisma.digimon.findMany({
       where: {
@@ -365,6 +445,16 @@ const resolvers = {
         id: parent?.rank?.id
       }
     }),
+    attribute: (parent, args, ctx, info) => prisma.attribute.findUnique({
+      where: {
+        id: parent?.attribute?.id
+      }
+    }),
+    element: (parent, args, ctx, info) => prisma.element.findUnique({
+      where: {
+        id: parent?.element?.id
+      }
+    }),
     families: (parent, args, ctx, info) => prisma.family.findMany({
       where: {
         digimons: {
@@ -374,17 +464,274 @@ const resolvers = {
         }
       }
     }),
-  },
-  Family: {
-    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+    animes: (parent, args, ctx, info) => prisma.animes.findMany({
       where: {
-        family: {
+        digimons: {
           some: {
             id: parent.id
           }
         }
       }
-    })
+    }),
+    episodes: (parent, args, ctx, info) => prisma.episode.findMany({
+      where: {
+        digimons: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    movies: (parent, args, ctx, info) => prisma.movie.findMany({
+      where: {
+        digimons: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digimental: (parent, args, ctx, info) => prisma.digimental.findUnique({
+      where: {
+        id: parent?.digimental?.id
+      }
+    }),
+  },
+  Universe: {
+    animes: (parent, args, ctx, info) => prisma.anime.findMany({
+      where: {
+        universeId: parent.id
+      }
+    }),
+    movies: (parent, args, ctx, info) => prisma.movie.findMany({
+      where: {
+        universeId: parent.id
+      }
+    }),
+    characters: (parent, args, ctx, info) => prisma.character.findMany({
+      where: {
+        universeId: parent.id
+      }
+    }),
+  },
+  Anime: {
+    episodes: (parent, args, ctx, info) => prisma.episode.findMany({
+      where: {
+        animeId: parent.id
+      }
+    }),
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        animes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digivices: (parent, args, ctx, info) => prisma.digivice.findMany({
+      where: {
+        animes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    characters: (parent, args, ctx, info) => prisma.character.findMany({
+      where: {
+        animes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    crests: (parent, args, ctx, info) => prisma.character.findMany({
+      where: {
+        animes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    universe: (parent, args, ctx, info) => prisma.universe.findUnique({
+      where: {
+        id: parent?.universe?.id
+      }
+    }),
+  },
+  Episode: {
+    anime: (parent, args, ctx, info) => prisma.anime.findUnique({
+      where: {
+        id: parent?.anime?.id
+      }
+    }),
+    characters: (parent, args, ctx, info) => prisma.character.findMany({
+      where: {
+        episodes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        episodes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+  },
+  Movie: {
+    universe: (parent, args, ctx, info) => prisma.universe.findUnique({
+      where: {
+        id: parent?.universe?.id
+      }
+    }),
+    characters: (parent, args, ctx, info) => prisma.character.findMany({
+      where: {
+        episodes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        episodes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digivices: (parent, args, ctx, info) => prisma.digivice.findMany({
+      where: {
+        episodes: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+  },
+  Character: {
+    animes: (parent, args, ctx, info) => prisma.anime.findMany({
+      where: {
+        characters: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digivices: (parent, args, ctx, info) => prisma.digivice.findMany({
+      where: {
+        digiDestinedId: parent.id
+      }
+    }),
+    crest: (parent, args, ctx, info) => prisma.crest.findUnique({
+      where: {
+        digiDestinedId: parent.id
+      }
+    }),
+    digimental: (parent, args, ctx, info) => prisma.digimental.findUnique({
+      where: {
+        digiDestinedId: parent.id
+      }
+    }),
+    universes: (parent, args, ctx, info) => prisma.universe.findMany({
+      where: {
+        characters: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    episodes: (parent, args, ctx, info) => prisma.episode.findMany({
+      where: {
+        characters: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    movies: (parent, args, ctx, info) => prisma.movie.findMany({
+      where: {
+        characters: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+  },
+  Digivice: {
+    type: (parent, args, ctx, info) => DigiviceType[parent.type],
+    animes: (parent, args, ctx, info) => prisma.anime.findMany({
+      where: {
+        digivices: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    movies: (parent, args, ctx, info) => prisma.movie.findMany({
+      where: {
+        digivices: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+  },
+  Crest: {
+    digiDestined: (parent, args, ctx, info) => prisma.character.findUnique({
+      where: {
+        id: parent?.digiDestinedId
+      }
+    }),
+    animes: (parent, args, ctx, info) => prisma.anime.findMany({
+      where: {
+        crests: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
+    digimental: (parent, args, ctx, info) => prisma.digimental.findUnique({
+      where: {
+        id: parent?.digimentalId
+      }
+    }),
+  },
+  Digimental: {
+    digiDestined: (parent, args, ctx, info) => prisma.character.findUnique({
+      where: {
+        id: parent?.digiDestinedId
+      }
+    }),
+    digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
+      where: {
+        digimentalId: parent.id
+      }
+    }),
+    crest: (parent, args, ctx, info) => prisma.crest.findUnique({
+      where: {
+        digimentalId: parent?.id
+      }
+    }),
   },
   Date: dateScalar
 };
