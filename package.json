@@ -5,8 +5,8 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "node server.js",
-    "prod": "prisma migrate dev --name init && node server.js",
+    "dev": "prisma migrate dev --name init && node server.js",
+    "prod": "node server.js",
     "heroku-postbuild": "npx prisma generate"
   },
   "dependencies": {
