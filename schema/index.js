@@ -12,6 +12,7 @@ const typeDefs = gql`
   }
 
   input FamilyInput {
+    id: ID
     name: String
     symbol: String
     description: String
@@ -26,6 +27,7 @@ const typeDefs = gql`
   }
 
   input RankInput {
+    id: ID
     name: String
     description: String
     digimons: [DigimonInput]
@@ -42,6 +44,7 @@ const typeDefs = gql`
   }
 
   input AttributeInput {
+    id: ID
     name: String
     symbol: String
     description: String
@@ -59,6 +62,7 @@ const typeDefs = gql`
   }
 
   input ElementInput {
+    id: ID
     name: String
     strong: [ElementInput]
     weak: [ElementInput]
@@ -71,35 +75,36 @@ const typeDefs = gql`
     prior: [Digimon]
     next: [Digimon]
     rank: Rank
-    rankId: Int
+    # rankId: Int
     attribute: Attribute
-    attributeId: Int
+    # attributeId: Int
     families: [Family]
     element: Element
-    elementId: Int
+    # elementId: Int
     animes: [Anime]
     episodes: [Episode]
     movies: [Movie]
     digimental: Digimental
-    digimentalId: Int
+    # digimentalId: Int
   }
 
   input DigimonInput {
+    id: ID
     name: String
     prior: [DigimonInput]
     next: [DigimonInput]
     rank: RankInput
-    rankId: Int
+    # rankId: Int
     attribute: AttributeInput
-    attributeId: Int
+    # attributeId: Int
     families: [FamilyInput]
     element: ElementInput
-    elementId: Int
+    # elementId: Int
     animes: [AnimeInput]
     episodes: [EpisodeInput]
     movies: [MovieInput]
     digimental: DigimentalInput
-    digimentalId: Int
+    # digimentalId: Int
   }
 
   type Universe {
@@ -111,6 +116,7 @@ const typeDefs = gql`
   }
 
   input UniverseInput {
+    id: ID
     name: String
     animes: [AnimeInput]
     movies: [MovieInput]
@@ -128,10 +134,11 @@ const typeDefs = gql`
     characters: [Character]
     crests: [Crest]
     universe: Universe
-    universeId: Int
+    # universeId: Int
   }
 
   input AnimeInput {
+    id: ID
     title: String
     synopsis: String
     originalAirDate: Date
@@ -149,12 +156,13 @@ const typeDefs = gql`
     synopsis: String
     originalAirDate: Date
     anime: Anime
-    animeId: Int
+    # animeId: Int
     characters: [Character]
     digimons: [Digimon]
   }
   
   input EpisodeInput {
+    id: ID
     title: String
     synopsis: String
     originalAirDate: Date
@@ -169,13 +177,14 @@ const typeDefs = gql`
     synopsis: String
     originalAirDate: Date
     universe: Universe
-    universeId: Int
+    # universeId: Int
     characters: [Character]
     digimons: [Digimon]
     digivices: [Digivice]
   }
 
   input MovieInput {
+    id: ID
     title: String
     synopsis: String
     originalAirDate: Date
@@ -199,6 +208,7 @@ const typeDefs = gql`
   }
 
   input CharacterInput {
+    id: ID
     name: String
     isDigiDestined: Boolean
     animes: [AnimeInput]
@@ -213,7 +223,7 @@ const typeDefs = gql`
   type Digivice {
     id: ID!
     digiDestined: Character
-    digiDestinedId: Int
+    # digiDestinedId: Int
     colors: [String]
     type: DigiviceType
     animes: [Anime]
@@ -221,6 +231,7 @@ const typeDefs = gql`
   }
 
   input DigiviceInput {
+    id: ID
     digiDestined: CharacterInput
     colors: [String]
     type: DigiviceType
@@ -238,13 +249,14 @@ const typeDefs = gql`
     name: String
     description: String
     digiDestined: Character
-    digiDestinedId: Int
+    # digiDestinedId: Int
     animes: [Anime]
     digimental: Digimental
-    digimentalId: Int
+    # digimentalId: Int
   }
 
   input CrestInput {
+    id: ID
     name: String
     description: String
     digiDestined: CharacterInput
@@ -257,12 +269,13 @@ const typeDefs = gql`
     name: String
     description: String
     digiDestined: Character
-    digiDestinedId: Int
+    # digiDestinedId: Int
     digimons: [Digimon]
     crest: Crest
   }
 
   input DigimentalInput {
+    id: ID
     name: String
     description: String
     digiDestined: CharacterInput
@@ -270,28 +283,77 @@ const typeDefs = gql`
     crest: CrestInput
   }
 
+  input OptionsInput {
+    limit: Int
+    offset: Int
+    order: String
+    orderBy: String
+  }
 
   type Query {
-    getDigimons: [Digimon]
-    getDigimon(name: String): Digimon
-    getFamilies: [Family]
-    getFamily(name: String): Family
-    getRanks: [Rank]
-    getRank(name: String): Rank
-    getAttributes: [Attribute]
-    getAttribute(name: String): Attribute
-    getElements: [Element]
-    getElement(name: String): Element
+    # Families
+    getFamilies(options: OptionsInput): [Family]
+    getFamilyById(id: Int!, options: OptionsInput): Family!
+    getFamilyByName(name: String!, options: OptionsInput): Family!
+    # Ranks
+    getRanks(options: OptionsInput): [Rank]
+    getRankById(id: Int!, options: OptionsInput): Rank!
+    getRankByName(name: String!, options: OptionsInput): Rank!
+    # Attributes
+    getAttributes(options: OptionsInput): [Attribute]
+    getAttributeById(id: Int!, options: OptionsInput): Attribute!
+    getAttributeByName(name: String!, options: OptionsInput): Attribute!
+    # Elements
+    getElements(options: OptionsInput): [Element]
+    getElementById(id: Int!, options: OptionsInput): Element!
+    getElementByName(name: String!, options: OptionsInput): Element!
+    # Digimons
+    getDigimons(options: OptionsInput): [Digimon]
+    getDigimonById(id: Int!, options: OptionsInput): Digimon!
+    getDigimonByName(name: String!, options: OptionsInput): Digimon!
+    # Universes
+    getUniverses(options: OptionsInput): [Universe]
+    getUniverseById(id: Int!, options: OptionsInput): Universe!
+    getUniverseByName(name: String!, options: OptionsInput): Universe!
+    # Animes
+    getAnimes(options: OptionsInput): [Anime]
+    getAnimeById(id: Int!, options: OptionsInput): Anime!
+    getAnimeByTitle(title: String!, options: OptionsInput): Anime
+    # Episodes
+    getEpisodes(options: OptionsInput): [Episode]
+    getEpisodeById(id: Int!, options: OptionsInput): Episode!
+    getEpisodeByTitle(title: String!, options: OptionsInput): Episode
+    # Movies
+    getMovies(options: OptionsInput): [Movie]
+    getMovieById(id: Int!, options: OptionsInput): Movie!
+    getMovieByTitle(title: String!, options: OptionsInput): Movie
+    # Characters
+    getCharacters(options: OptionsInput): [Character]
+    getCharacterById(id: Int!, options: OptionsInput): Character!
+    getCharacterByName(name: String!, options: OptionsInput): Character!
+    # Digivices
+    getDigivices(options: OptionsInput): [Digivice]
+    getDigiviceById(id: Int!, options: OptionsInput): Digivice!
+    getDigivicesByType(type: DigiviceType!, options: OptionsInput): [Digivice]
+    getDigiviceTypes(options: OptionsInput): [DigiviceType]
+    # Crests
+    getCrests(options: OptionsInput): [Crest]
+    getCrestById(id: Int!, options: OptionsInput): Crest!
+    getCrestByName(name: String!, options: OptionsInput): Crest!
+    # Digimentals
+    getDigimentals(options: OptionsInput): [Digimental]
+    getDigimentalById(id: Int!, options: OptionsInput): Digimental!
+    getDigimentalByName(name: String!, options: OptionsInput): Digimental!
   }
 
   type Mutation {
-    newDigimon(data: DigimonInput!): Digimon!
-    addDigimonPriorNext(actualDigimon: String!, priorDigimons: [String!]!, nextDigimons: [String!]!): Digimon!
-    removeDigimonPriorNext(actualDigimon: String!, priorDigimons: [String!]!, nextDigimons: [String!]!): Digimon!
-    newFamily(data: FamilyInput!): Family!
-    newRank(data: RankInput!): Rank!
-    newAttribute(data: AttributeInput!): Attribute!
-    newElement(data: ElementInput!): Element!
+    createDigimon(data: DigimonInput!): Digimon!
+    updateDigimon(data: DigimonInput!): Digimon!
+    # removeDigimonPriorNext(actualDigimon: String!, priorDigimons: [String!]!, nextDigimons: [String!]!): Digimon!
+    createFamily(data: FamilyInput!): Family!
+    createRank(data: RankInput!): Rank!
+    createAttribute(data: AttributeInput!): Attribute!
+    createElement(data: ElementInput!): Element!
   }
 `;
 
