@@ -4,6 +4,16 @@
   "main": "index.js",
   "type": "module",
   "license": "MIT",
+  "keywords": [
+    "gennai",
+    "digimon",
+    "graphql",
+    "apollo",
+    "express",
+    "prisma",
+    "nodejs",
+    "api"
+  ],
   "scripts": {
     "dev": "prisma migrate dev --name init && node server.js",
     "prod": "node server.js",
