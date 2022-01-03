@@ -344,7 +344,7 @@ const resolvers = {
   Family: {
     digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
       where: {
-        family: {
+        families: {
           some: {
             id: parent.id
           }
