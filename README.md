@@ -1,6 +1,6 @@
 # Gennai API
 
-Gennai is an API about the Digimon franchise. It was made on [NodeJS](https://nodejs.org/en/), using [GraphQL](https://graphql.org/) and technologies such as [Prisma](https://www.prisma.io/) and [Apollo](https://www.apollographql.com/).
+Gennai is an API about the Digimon franchise. It was made on [NodeJS](https://nodejs.org/en/), using [GraphQL](https://graphql.org/) and technologies such as [Prisma](https://www.prisma.io/), [Apollo](https://www.apollographql.com/) and [Express](https://expressjs.com/).
 
 ## Content
 The goal of the Gennai API is to  gather all the data about the Digimon franchise, that including games, animes, movies, mangas, TCG, digimons and much more.
