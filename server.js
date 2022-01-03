@@ -1,5 +1,6 @@
+import { ApolloServerPluginDrainHttpServer, AuthenticationError } from 'apollo-server-core';
+
 import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 import cors from 'cors';
 import express from 'express';
 import http from 'http';
@@ -23,7 +24,9 @@ const startServer = async () => {
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     introspection: true,
     context: ({ req }) => {
-
+      if (req.method === 'POST' && req.headers.authorization !== process.env.AUTH) {
+        throw new AuthenticationError("You do not have permission to use POST method.")
+      }
     },
     formatError: (err) => {
       return {
