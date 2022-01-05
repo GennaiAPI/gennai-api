@@ -335,7 +335,7 @@ const resolvers = {
         ...args.data,
       }
     }),
-    createElement: (parent, args, ctx, info) => prisma.element.create({
+    createType: (parent, args, ctx, info) => prisma.type.create({
       data: {
         ...args.data
       }
@@ -413,7 +413,7 @@ const resolvers = {
     }),
     digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
       where: {
-        element: {
+        type: {
           some: {
             id: parent.id
           }

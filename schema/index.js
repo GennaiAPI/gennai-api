@@ -321,10 +321,10 @@ const typeDefs = gql`
     getAttributes(options: OptionsInput): [Attribute]
     getAttributeById(id: Int!, options: OptionsInput): Attribute!
     getAttributeByName(name: String!, options: OptionsInput): Attribute!
-    # Elements
-    getElements(options: OptionsInput): [Element]
-    getElementById(id: Int!, options: OptionsInput): Element!
-    getElementByName(name: String!, options: OptionsInput): Element!
+    # Types
+    getTypes(options: OptionsInput): [Type]
+    getTypeById(id: Int!, options: OptionsInput): Type!
+    getTypeByName(name: String!, options: OptionsInput): Type!
     # Digimons
     getDigimons(options: OptionsInput): [Digimon]
     getDigimonById(id: Int!, options: OptionsInput): Digimon!
@@ -371,7 +371,7 @@ const typeDefs = gql`
     createFamily(data: FamilyInput!): Family!
     createRank(data: RankInput!): Rank!
     createAttribute(data: AttributeInput!): Attribute!
-    createElement(data: ElementInput!): Element!
+    createType(data: TypeInput!): Type!
   }
 `;
 
