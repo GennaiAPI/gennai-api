@@ -45,8 +45,8 @@ model Digimon {
   slug         String        @unique @db.VarChar(255)
   name         String        @unique @db.VarChar(255)
   otherNames   DigimonName[]
-  isJogress    Boolean
-  hasXAntibody Boolean
+  isJogress    Boolean       @default(false)
+  hasXAntibody Boolean       @default(false)
   prior        Digimon[]     @relation("PriorNext", references: [id])
   next         Digimon[]     @relation("PriorNext", references: [id])
   rank         Rank          @relation(fields: [rankId], references: [id])
