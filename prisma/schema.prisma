@@ -32,11 +32,9 @@ model Attribute {
   digimons    Digimon[]
 }
 
-model Element {
+model Type {
   id       Int       @id @default(autoincrement())
   name     String    @db.VarChar(255)
-  strong   Element[] @relation("ElemWeakStrong", references: [id])
-  weak     Element[] @relation("ElemWeakStrong", references: [id])
   digimons Digimon[]
 }
 
@@ -54,8 +52,8 @@ model Digimon {
   attribute    Attribute     @relation(fields: [attributeId], references: [id])
   attributeId  Int
   families     Family[]
-  element      Element?      @relation(fields: [elementId], references: [id])
-  elementId    Int?
+  type         Type?         @relation(fields: [typeId], references: [id])
+  typeId       Int?
   animes       Anime[]
   episodes     Episode[]
   movies       Movie[]
