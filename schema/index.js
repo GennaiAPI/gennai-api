@@ -53,13 +53,13 @@ const typeDefs = gql`
     digimons: [DigimonInput]
   }
 
-  type Type {
+  type DigiType {
     id: ID!
     name: String
     digimons: [Digimon]
   }
 
-  input TypeInput {
+  input DigiTypeInput {
     id: ID
     name: String
     digimons: [DigimonInput]
@@ -78,7 +78,7 @@ const typeDefs = gql`
     # rankId: Int
     attribute: Attribute
     # attributeId: Int
-    type: Type
+    type: DigiType
     families: [Family]
     # elementId: Int
     animes: [Anime]
@@ -101,7 +101,7 @@ const typeDefs = gql`
     # rankId: Int
     attribute: AttributeInput
     # attributeId: Int
-    type: TypeInput
+    type: DigiTypeInput
     families: [FamilyInput]
     # elementId: Int
     animes: [AnimeInput]
