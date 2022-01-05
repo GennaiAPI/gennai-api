@@ -71,7 +71,11 @@ const typeDefs = gql`
   
   type Digimon {
     id: ID!
+    slug: String
     name: String
+    otherNames: [DigimonName]
+    isJogress: Boolean
+    hasXAntibody: Boolean
     prior: [Digimon]
     next: [Digimon]
     rank: Rank
@@ -90,7 +94,11 @@ const typeDefs = gql`
 
   input DigimonInput {
     id: ID
+    slug: String
     name: String
+    otherNames: [DigimonNameInput]
+    isJogress: Boolean
+    hasXAntibody: Boolean
     prior: [DigimonInput]
     next: [DigimonInput]
     rank: RankInput
@@ -105,6 +113,20 @@ const typeDefs = gql`
     movies: [MovieInput]
     digimental: DigimentalInput
     # digimentalId: Int
+  }
+
+  input DigimonNameInput {
+    id: ID
+    lang: String
+    name: String
+    digimon: DigimonInput
+  }
+
+  type DigimonName {
+    id: ID!
+    lang: String
+    name: String
+    digimon: Digimon
   }
   
   type Universe {
