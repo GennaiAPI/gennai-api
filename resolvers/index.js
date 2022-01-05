@@ -393,24 +393,6 @@ const resolvers = {
     })
   },
   Type: {
-    strong: (parent, args, ctx, info) => prisma.type.findMany({
-      where: {
-        weak: {
-          some: {
-            id: parent.id
-          }
-        }
-      }
-    }),
-    weak: (parent, args, ctx, info) => prisma.type.findMany({
-      where: {
-        strong: {
-          some: {
-            id: parent.id
-          }
-        }
-      }
-    }),
     digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
       where: {
         type: {
