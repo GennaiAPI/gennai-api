@@ -47,15 +47,15 @@ const resolvers = {
         name: args.name
       }
     }),
-    getElements: (prt, args, ctx, info) => prisma.element.findMany({
+    getTypes: (prt, args, ctx, info) => prisma.type.findMany({
       ...getOptions(args?.options)
     }),
-    getElementById: (prt, args, ctx, info) => prisma.element.findUnique({
+    getTypeById: (prt, args, ctx, info) => prisma.type.findUnique({
       where: {
         id: args.id
       }
     }),
-    getElementByName: (prt, args, ctx, info) => prisma.element.findUnique({
+    getTypeByName: (prt, args, ctx, info) => prisma.type.findUnique({
       where: {
         name: args.name
       }
@@ -392,8 +392,8 @@ const resolvers = {
       }
     })
   },
-  Element: {
-    strong: (parent, args, ctx, info) => prisma.element.findMany({
+  Type: {
+    strong: (parent, args, ctx, info) => prisma.type.findMany({
       where: {
         weak: {
           some: {
@@ -402,7 +402,7 @@ const resolvers = {
         }
       }
     }),
-    weak: (parent, args, ctx, info) => prisma.element.findMany({
+    weak: (parent, args, ctx, info) => prisma.type.findMany({
       where: {
         strong: {
           some: {
@@ -450,9 +450,9 @@ const resolvers = {
         id: parent?.attribute?.id
       }
     }),
-    element: (parent, args, ctx, info) => prisma.element.findUnique({
+    type: (parent, args, ctx, info) => prisma.type.findUnique({
       where: {
-        id: parent?.element?.id
+        id: parent?.type?.id
       }
     }),
     families: (parent, args, ctx, info) => prisma.family.findMany({
