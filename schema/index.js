@@ -53,19 +53,15 @@ const typeDefs = gql`
     digimons: [DigimonInput]
   }
 
-  type Element {
+  type Type {
     id: ID!
     name: String
-    strong: [Element]
-    weak: [Element]
     digimons: [Digimon]
   }
 
-  input ElementInput {
+  input TypeInput {
     id: ID
     name: String
-    strong: [ElementInput]
-    weak: [ElementInput]
     digimons: [DigimonInput]
   }
   
@@ -82,7 +78,7 @@ const typeDefs = gql`
     # rankId: Int
     attribute: Attribute
     # attributeId: Int
-    element: Element
+    type: Type
     families: [Family]
     # elementId: Int
     animes: [Anime]
@@ -105,8 +101,8 @@ const typeDefs = gql`
     # rankId: Int
     attribute: AttributeInput
     # attributeId: Int
+    type: TypeInput
     families: [FamilyInput]
-    element: ElementInput
     # elementId: Int
     animes: [AnimeInput]
     episodes: [EpisodeInput]
