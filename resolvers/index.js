@@ -199,7 +199,7 @@ const resolvers = {
             connect: args?.data?.prior?.map(p => {
               return {
                 where: {
-                  id: p.id
+                  id: parseInt(p.id)
                 }
               }
             })
@@ -208,7 +208,7 @@ const resolvers = {
             connect: args?.data?.next?.map(n => {
               return {
                 where: {
-                  id: n.id
+                  id: parseInt(n.id)
                 }
               }
             })
@@ -217,7 +217,7 @@ const resolvers = {
             connect: args?.data?.families?.map(f => {
               return {
                 where: {
-                  id: f.id
+                  id: parseInt(f.id)
                 }
               }
             })
@@ -226,7 +226,7 @@ const resolvers = {
             connect: args?.data?.animes?.map(a => {
               return {
                 where: {
-                  id: a.id
+                  id: parseInt(a.id)
                 }
               }
             })
@@ -235,7 +235,7 @@ const resolvers = {
             connect: args?.data?.episodes?.map(e => {
               return {
                 where: {
-                  id: e.id
+                  id: parseInt(e.id)
                 }
               }
             })
@@ -244,7 +244,7 @@ const resolvers = {
             connect: args?.data?.movies?.map(m => {
               return {
                 where: {
-                  id: m.id
+                  id: parseInt(m.id)
                 }
               }
             })
@@ -294,35 +294,9 @@ const resolvers = {
         }
       })
     },
-    // removeDigimonPriorNext: (parent, args, ctx, info) => prisma.digimon.update({
-    //   where: {
-    //     name: args.actualDigimon
-    //   },
-    //   data: {
-    //     prior: {
-    //       disconnect: args?.priorDigimons?.map(d => {
-    //         return {
-    //           name: d
-    //         }
-    //       })
-    //     },
-    //     next: {
-    //       disconnect: args?.nextDigimons?.map(d => {
-    //         return {
-    //           name: d
-    //         }
-    //       })
-    //     }
-    //   },
-    //   include: {
-    //     prior: true,
-    //     next: true,
-    //     family: true
-    //   }
-    // }),
     createFamily: (parent, args, ctx, info) => prisma.family.create({
       data: {
-        ...args.data
+        ...args.data,
       }
     }),
     createRank: (parent, args, ctx, info) => prisma.rank.create({
@@ -332,12 +306,77 @@ const resolvers = {
     }),
     createAttribute: (parent, args, ctx, info) => prisma.attribute.create({
       data: {
-        ...args.data,
+        ...args.data
       }
     }),
     createType: (parent, args, ctx, info) => prisma.type.create({
       data: {
         ...args.data
+      }
+    }),
+    createUniverse: (parent, args, ctx, info) => prisma.universe.create({
+      data: {
+        ...args.data
+      }
+    }),
+    createAnime: (parent, args, ctx, info) => prisma.anime.create({
+      data: {
+        ...args.data,
+        universe: {
+          connect: {
+            id: parseInt(args?.data?.universe?.id)
+          }
+        },
+      }
+    }),
+    createMovie: (parent, args, ctx, info) => prisma.movie.create({
+      data: {
+        ...args.data,
+        universe: {
+          connect: {
+            id: parseInt(args?.data?.universe?.id)
+          }
+        },
+      }
+    }),
+    createCharacter: (parent, args, ctx, info) => prisma.character.create({
+      data: {
+        ...args.data
+      }
+    }),
+    createDigivice: (parent, args, ctx, info) => prisma.digivice.create({
+      data: {
+        ...args.data,
+        digiDestined: {
+          connect: {
+            id: parseInt(args?.data?.digiDestined?.id)
+          }
+        },
+      }
+    }),
+    createCrest: (parent, args, ctx, info) => prisma.crest.create({
+      data: {
+        ...args.data,
+        digiDestined: {
+          connect: {
+            id: parseInt(args?.data?.digiDestined?.id)
+          }
+        },
+        digimental: {
+          connect: {
+            id: parseInt(args?.data?.digimental?.id)
+          }
+        },
+      }
+    }),
+    createDigimental: (parent, args, ctx, info) => prisma.digimental.create({
+      data: {
+        ...args.data,
+        digiDestined: {
+          connect: {
+            id: parseInt(args?.data?.digiDestined?.id)
+          }
+        },
       }
     }),
   },
@@ -404,6 +443,15 @@ const resolvers = {
     })
   },
   Digimon: {
+    otherNames: (parent, args, ctx, info) => prisma.digimonName.findMany({
+      where: {
+        digimon: {
+          some: {
+            id: parent.id
+          }
+        }
+      }
+    }),
     prior: (parent, args, ctx, info) => prisma.digimon.findMany({
       where: {
         next: {
@@ -476,6 +524,13 @@ const resolvers = {
     digimental: (parent, args, ctx, info) => prisma.digimental.findUnique({
       where: {
         id: parent?.digimental?.id
+      }
+    }),
+  },
+  DigimonName: {
+    digimon: (parent, args, ctx, info) => prisma.digimon.findUnique({
+      where: {
+        id: parent?.digimon?.id
       }
     }),
   },
@@ -680,7 +735,7 @@ const resolvers = {
   Crest: {
     digiDestined: (parent, args, ctx, info) => prisma.character.findUnique({
       where: {
-        id: parent?.digiDestinedId
+        id: parent?.digiDestined?.id
       }
     }),
     animes: (parent, args, ctx, info) => prisma.anime.findMany({
@@ -694,14 +749,14 @@ const resolvers = {
     }),
     digimental: (parent, args, ctx, info) => prisma.digimental.findUnique({
       where: {
-        id: parent?.digimentalId
+        id: parent?.digimental?.id
       }
     }),
   },
   Digimental: {
     digiDestined: (parent, args, ctx, info) => prisma.character.findUnique({
       where: {
-        id: parent?.digiDestinedId
+        id: parent?.digiDestined?.id
       }
     }),
     digimons: (parent, args, ctx, info) => prisma.digimon.findMany({
@@ -711,7 +766,7 @@ const resolvers = {
     }),
     crest: (parent, args, ctx, info) => prisma.crest.findUnique({
       where: {
-        digimentalId: parent?.id
+        digimentalId: parent.id
       }
     }),
   },
