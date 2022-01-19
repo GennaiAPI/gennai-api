@@ -372,6 +372,13 @@ const typeDefs = gql`
     createRank(data: RankInput!): Rank!
     createAttribute(data: AttributeInput!): Attribute!
     createType(data: TypeInput!): Type!
+    createUniverse(data: UniverseInput!): Universe!
+    createAnime(data: AnimeInput!): Anime!
+    createMovie(data: MovieInput!): Movie!
+    createCharacter(data: CharacterInput!): Character!
+    createDigivice(data: DigiviceInput!): Digivice!
+    createCrest(data: CrestInput!): Crest!
+    createDigimental(data: DigimentalInput!): Digimental!
   }
 `;
 
