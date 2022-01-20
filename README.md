@@ -17,7 +17,7 @@ For now, there is only 5 universes in totality, with only 1 (Adventure) working.
 - Tamers :x:
 - Frontier :x:
 - Savers :x:
-- Cross Wars :x:
+- Xros Wars :x:
 
 ## Wrappers
 
