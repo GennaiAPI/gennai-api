@@ -69,53 +69,38 @@ const typeDefs = gql`
     id: ID!
     slug: String
     name: String
-    otherNames: [DigimonName]
     isJogress: Boolean
     hasXAntibody: Boolean
+    rank: Rank
+    attribute: Attribute
+    type: Type
+    digimental: Digimental
+    otherNames: [DigimonName]
     prior: [Digimon]
     next: [Digimon]
-    rank: Rank
-    # rankId: Int
-    attribute: Attribute
-    # attributeId: Int
-    type: Type
     families: [Family]
-    # elementId: Int
     animes: [Anime]
     episodes: [Episode]
     movies: [Movie]
-    digimental: Digimental
-    # digimentalId: Int
   }
 
   input DigimonInput {
     id: ID
     slug: String
     name: String
-    otherNames: [DigimonNameInput]
     isJogress: Boolean
     hasXAntibody: Boolean
+    rank: RankInput
+    attribute: AttributeInput
+    type: TypeInput
+    digimental: DigimentalInput
+    otherNames: [DigimonNameInput]
     prior: [DigimonInput]
     next: [DigimonInput]
-    rank: RankInput
-    # rankId: Int
-    attribute: AttributeInput
-    # attributeId: Int
-    type: TypeInput
     families: [FamilyInput]
-    # elementId: Int
     animes: [AnimeInput]
     episodes: [EpisodeInput]
     movies: [MovieInput]
-    digimental: DigimentalInput
-    # digimentalId: Int
-  }
-
-  input DigimonNameInput {
-    id: ID
-    lang: String
-    name: String
-    digimon: DigimonInput
   }
 
   type DigimonName {
@@ -123,6 +108,13 @@ const typeDefs = gql`
     lang: String
     name: String
     digimon: Digimon
+  }
+  
+  input DigimonNameInput {
+    id: ID
+    lang: String
+    name: String
+    digimon: DigimonInput
   }
   
   type Universe {
@@ -146,13 +138,13 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
+    universe: Universe
+    crests: [Crest]
+    digimentals: [Digimental]
     episodes: [Episode]
     digimons: [Digimon]
     digivices: [Digivice]
     characters: [Character]
-    crests: [Crest]
-    universe: Universe
-    # universeId: Int
   }
 
   input AnimeInput {
@@ -160,12 +152,13 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
+    universe: UniverseInput
+    crests: [CrestInput]
+    digimentals: [DigimentalInput]
     episodes: [EpisodeInput]
     digimons: [DigimonInput]
     digivices: [DigiviceInput]
     characters: [CharacterInput]
-    crests: [CrestInput]
-    universe: UniverseInput
   }
   
   type Episode {
@@ -174,7 +167,6 @@ const typeDefs = gql`
     synopsis: String
     originalAirDate: Date
     anime: Anime
-    # animeId: Int
     characters: [Character]
     digimons: [Digimon]
   }
@@ -195,10 +187,11 @@ const typeDefs = gql`
     synopsis: String
     originalAirDate: Date
     universe: Universe
-    # universeId: Int
     characters: [Character]
     digimons: [Digimon]
     digivices: [Digivice]
+    crests: [Crest]
+    digimentals: [Digimental]
   }
 
   input MovieInput {
@@ -210,16 +203,18 @@ const typeDefs = gql`
     characters: [CharacterInput]
     digimons: [DigimonInput]
     digivices: [DigiviceInput]
+    crests: [CrestInput]
+    digimentals: [DigimentalInput]
   }
   
   type Character {
     id: ID!
     name: String
     isDigiDestined: Boolean
+    crests: [Crest]
+    digimentals: [Digimental]
     animes: [Anime]
     digivices: [Digivice]
-    crest: Crest
-    digimental: Digimental
     universes: [Universe]
     episodes: [Episode]
     movies: [Movie]
@@ -229,10 +224,10 @@ const typeDefs = gql`
     id: ID
     name: String
     isDigiDestined: Boolean
+    crests: [CrestInput]
+    digimentals: [DigimentalInput]
     animes: [AnimeInput]
     digivices: [DigiviceInput]
-    crest: CrestInput
-    digimental: DigimentalInput
     universes: [UniverseInput]
     episodes: [EpisodeInput]
     movies: [MovieInput]
@@ -241,9 +236,8 @@ const typeDefs = gql`
   type Digivice {
     id: ID!
     digiDestined: Character
-    # digiDestinedId: Int
-    colors: [String]
     type: DigiviceType
+    colors: [String]
     animes: [Anime]
     movies: [Movie]
   }
@@ -251,8 +245,8 @@ const typeDefs = gql`
   input DigiviceInput {
     id: ID
     digiDestined: CharacterInput
-    colors: [String]
     type: DigiviceType
+    colors: [String]
     animes: [AnimeInput]
     movies: [MovieInput]
   }
@@ -266,29 +260,30 @@ const typeDefs = gql`
     id: ID!
     name: String
     description: String
-    digiDestined: Character
-    # digiDestinedId: Int
-    animes: [Anime]
     digimental: Digimental
-    # digimentalId: Int
+    digiDestineds: [Character]
+    animes: [Anime]
+    movies: [Movie]
   }
 
   input CrestInput {
     id: ID
     name: String
     description: String
-    digiDestined: CharacterInput
-    animes: [AnimeInput]
     digimental: DigimentalInput
+    digiDestineds: [CharacterInput]
+    animes: [AnimeInput]
+    movies: [MovieInput]
   }
   
   type Digimental {
     id: ID!
     name: String
     description: String
-    digiDestined: Character
-    # digiDestinedId: Int
+    digiDestineds: [Character]
     digimons: [Digimon]
+    animes: [Anime]
+    movies: [Movie]
     crest: Crest
   }
 
@@ -296,8 +291,10 @@ const typeDefs = gql`
     id: ID
     name: String
     description: String
-    digiDestined: CharacterInput
+    digiDestineds: [CharacterInput]
     digimons: [DigimonInput]
+    animes: [AnimeInput]
+    movies: [MovieInput]
     crest: CrestInput
   }
 
@@ -365,20 +362,47 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    createFamily(data: FamilyInput!): Family!
+    updateFamily(data: FamilyInput!): Family!
+    deleteFamily(id: Int!): Family!
+    createRank(data: RankInput!): Rank!
+    updateRank(data: RankInput!): Rank!
+    deleteRank(id: Int!): Rank!
+    createAttribute(data: AttributeInput!): Attribute!
+    updateAttribute(data: AttributeInput!): Attribute!
+    deleteAttribute(id: Int!): Attribute!
+    createType(data: TypeInput!): Type!
+    deleteType(id: Int!): Type!
     createDigimon(data: DigimonInput!): Digimon!
     updateDigimon(data: DigimonInput!): Digimon!
-    # removeDigimonPriorNext(actualDigimon: String!, priorDigimons: [String!]!, nextDigimons: [String!]!): Digimon!
-    createFamily(data: FamilyInput!): Family!
-    createRank(data: RankInput!): Rank!
-    createAttribute(data: AttributeInput!): Attribute!
-    createType(data: TypeInput!): Type!
+    deleteDigimon(id: Int!): Digimon!
+    createDigimonName(data: DigimonNameInput!): DigimonName!
+    updateDigimonName(data: DigimonNameInput!): DigimonName!
+    deleteDigimonName(id: Int!): DigimonName!
     createUniverse(data: UniverseInput!): Universe!
+    updateUniverse(data: UniverseInput!): Universe!
+    deleteUniverse(id: Int!): Universe!
     createAnime(data: AnimeInput!): Anime!
+    updateAnime(data: AnimeInput!): Anime!
+    deleteAnime(id: Int!): Anime!
+    createEpisode(data: EpisodeInput!): Episode!
+    updateEpisode(data: EpisodeInput!): Episode!
+    deleteEpisode(id: Int!): Episode!
     createMovie(data: MovieInput!): Movie!
+    updateMovie(data: MovieInput!): Movie!
+    deleteMovie(id: Int!): Movie!
     createCharacter(data: CharacterInput!): Character!
+    updateCharacter(data: CharacterInput!): Character!
+    deleteCharacter(id: Int!): Character!
     createDigivice(data: DigiviceInput!): Digivice!
+    updateDigivice(data: DigiviceInput!): Digivice!
+    deleteDigivice(id: Int!): Digivice!
     createCrest(data: CrestInput!): Crest!
+    updateCrest(data: CrestInput!): Crest!
+    deleteCrest(id: Int!): Crest!
     createDigimental(data: DigimentalInput!): Digimental!
+    updateDigimental(data: DigimentalInput!): Digimental!
+    deleteDigimental(id: Int!): Digimental!
   }
 `;
 

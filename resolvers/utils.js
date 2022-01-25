@@ -33,3 +33,71 @@ export const getOptions = (options) => {
   }
 }
 
+export const getConnectAndDisconnect = (oldA, newA, property) => {
+  const oldArrayIds = Array.isArray(oldA) ? oldA.map(oA => parseInt(oA?.id)).sort() : []
+  const newArrayIds = Array.isArray(newA) ? newA.map(nA => parseInt(nA?.id)).sort() : []
+  if (arrayEquals(oldArrayIds, newArrayIds)) {
+    return null
+  } else {
+    return {
+      [property]: {
+        ...getArrayToDisconnect(oldArrayIds, newArrayIds),
+        ...getArrayToConnect(oldArrayIds, newArrayIds)
+      }
+    }
+  }
+}
+
+const getArrayToDisconnect = (oldA, newA) => {
+  const items = oldA.filter(a => newA ? !newA.includes(a) : false)
+  if (items.length) {
+    return {
+      disconnect: [
+        ...items.map(a => { return { id: a } })
+      ]
+    }
+  } else {
+    return null
+  }
+}
+
+const getArrayToConnect = (oldA, newA) => {
+  const items = newA.filter(a => oldA ? !oldA.includes(a) : false)
+  if (items.length) {
+    return {
+      connect: [
+        ...items.map(a => { return { id: a } })
+      ]
+    }
+  } else {
+    return null
+  }
+}
+
+export const changeSingleProperty = (oldO, newO, property) => {
+  if (parseInt(oldO.id) !== parseInt(newO.id)) {
+    return {
+      [property]: {
+        disconnect: {
+          id: oldO.id
+        },
+        connect: {
+          id: newO.id
+        }
+      }
+    }
+  } else {
+
+    return null
+  }
+}
+
+const arrayEquals = (a, b) => {
+  return Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length === b.length &&
+    a.every((val, index) => val === b[index]);
+}
+
+// export const getChanged = ()
+
