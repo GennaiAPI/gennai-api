@@ -9,15 +9,15 @@ const prisma = new PrismaClient()
 
 const resolvers = {
   Query: {
-    getFamilies: (prt, args, ctx, info) => prisma.family.findMany({
+    getFields: (prt, args, ctx, info) => prisma.field.findMany({
       ...getOptions(args?.options)
     }),
-    getFamilyById: (prt, args, ctx, info) => prisma.family.findUnique({
+    getFieldById: (prt, args, ctx, info) => prisma.field.findUnique({
       where: {
         id: args.id
       }
     }),
-    getFamilyByName: (prt, args, ctx, info) => prisma.family.findUnique({
+    getFieldByName: (prt, args, ctx, info) => prisma.field.findUnique({
       where: {
         name: args.name
       }
@@ -182,8 +182,8 @@ const resolvers = {
     }),
   },
   Mutation: {
-    // Family
-    createFamily: (parent, args, ctx, info) => prisma.family.create({
+    // Field
+    createField: (parent, args, ctx, info) => prisma.field.create({
       data: {
         ...args.data,
         digimons: {
@@ -197,14 +197,14 @@ const resolvers = {
         }
       }
     }),
-    updateFamily: async (parent, args, ctx, info) => {
-      const oDigimons = await prisma.family.findUnique({
+    updateField: async (parent, args, ctx, info) => {
+      const oDigimons = await prisma.field.findUnique({
         where: {
           id: parseInt(args.data.id)
         }
       }).digimons()
 
-      return prisma.family.update({
+      return prisma.field.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -216,7 +216,7 @@ const resolvers = {
         }
       })
     },
-    deleteFamily: (parent, args, ctx, info) => prisma.family.delete({
+    deleteField: (parent, args, ctx, info) => prisma.field.delete({
       where: {
         id: args.id
       }
@@ -358,8 +358,8 @@ const resolvers = {
             }
           })
         },
-        families: {
-          connect: args?.data?.families?.map(f => {
+        fields: {
+          connect: args?.data?.fields?.map(f => {
             return {
               where: {
                 id: parseInt(f.id)
@@ -408,7 +408,7 @@ const resolvers = {
       const oDigimental = currentDigimon.digimental()
       const oPrior = currentDigimon.prior()
       const oNext = currentDigimon.next()
-      const oFamilies = currentDigimon.families()
+      const oFields = currentDigimon.fields()
       const oAnimes = currentDigimon.animes()
       const oEpisodes = currentDigimon.episodes()
       const oMovies = currentDigimon.movies()
@@ -428,7 +428,7 @@ const resolvers = {
           digimentalId: args?.data?.digimental?.id ? parseInt(args.data.digimental.id) : oDigimental.id,
           ...getConnectAndDisconnect(oPrior, args.data.prior, 'prior'),
           ...getConnectAndDisconnect(oNext, args.data.next, 'next'),
-          ...getConnectAndDisconnect(oFamilies, args.data.families, 'families'),
+          ...getConnectAndDisconnect(oFields, args.data.fields, 'fields'),
           ...getConnectAndDisconnect(oAnimes, args.data.animes, 'animes'),
           ...getConnectAndDisconnect(oEpisodes, args.data.episodes, 'episodes'),
           ...getConnectAndDisconnect(oMovies, args.data.movies, 'movies'),
@@ -972,8 +972,8 @@ const resolvers = {
       }
     }),
   },
-  Family: {
-    digimons: (parent, args, ctx, info) => prisma.family.findUnique({
+  Field: {
+    digimons: (parent, args, ctx, info) => prisma.field.findUnique({
       where: {
         id: parent.id
       }
@@ -1041,11 +1041,11 @@ const resolvers = {
         id: parent.id
       }
     }).type(),
-    families: (parent, args, ctx, info) => prisma.digimon.findUnique({
+    fields: (parent, args, ctx, info) => prisma.digimon.findUnique({
       where: {
         id: parent.id
       }
-    }).families(),
+    }).fields(),
     animes: (parent, args, ctx, info) => prisma.digimon.findUnique({
       where: {
         id: parent.id
