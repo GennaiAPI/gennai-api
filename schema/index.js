@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 const typeDefs = gql`
   scalar Date
 
-  type Family {
+  type Field {
     id: ID!
     name: String
     symbol: String
@@ -11,7 +11,7 @@ const typeDefs = gql`
     digimons: [Digimon]
   }
 
-  input FamilyInput {
+  input FieldInput {
     id: ID
     name: String
     symbol: String
@@ -78,7 +78,7 @@ const typeDefs = gql`
     otherNames: [DigimonName]
     prior: [Digimon]
     next: [Digimon]
-    families: [Family]
+    fields: [Field]
     animes: [Anime]
     episodes: [Episode]
     movies: [Movie]
@@ -97,7 +97,7 @@ const typeDefs = gql`
     otherNames: [DigimonNameInput]
     prior: [DigimonInput]
     next: [DigimonInput]
-    families: [FamilyInput]
+    fields: [FieldInput]
     animes: [AnimeInput]
     episodes: [EpisodeInput]
     movies: [MovieInput]
@@ -306,10 +306,10 @@ const typeDefs = gql`
   }
 
   type Query {
-    # Families
-    getFamilies(options: OptionsInput): [Family]
-    getFamilyById(id: Int!, options: OptionsInput): Family!
-    getFamilyByName(name: String!, options: OptionsInput): Family!
+    # Fields
+    getFields(options: OptionsInput): [Field]
+    getFieldById(id: Int!, options: OptionsInput): Field!
+    getFieldByName(name: String!, options: OptionsInput): Field!
     # Ranks
     getRanks(options: OptionsInput): [Rank]
     getRankById(id: Int!, options: OptionsInput): Rank!
@@ -362,9 +362,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createFamily(data: FamilyInput!): Family!
-    updateFamily(data: FamilyInput!): Family!
-    deleteFamily(id: Int!): Family!
+    createField(data: FieldInput!): Field!
+    updateField(data: FieldInput!): Field!
+    deleteField(id: Int!): Field!
     createRank(data: RankInput!): Rank!
     updateRank(data: RankInput!): Rank!
     deleteRank(id: Int!): Rank!
@@ -372,6 +372,7 @@ const typeDefs = gql`
     updateAttribute(data: AttributeInput!): Attribute!
     deleteAttribute(id: Int!): Attribute!
     createType(data: TypeInput!): Type!
+    updateType(data: TypeInput!): Type!
     deleteType(id: Int!): Type!
     createDigimon(data: DigimonInput!): Digimon!
     updateDigimon(data: DigimonInput!): Digimon!

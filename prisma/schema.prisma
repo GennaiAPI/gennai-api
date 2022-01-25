@@ -7,7 +7,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Family {
+model Field {
   id          Int       @id @default(autoincrement())
   name        String    @unique @db.VarChar(255)
   symbol      String    @db.VarChar(255)
@@ -51,7 +51,7 @@ model Digimon {
   rankId       Int
   attribute    Attribute     @relation(fields: [attributeId], references: [id])
   attributeId  Int
-  families     Family[]
+  fields     Field[]
   type         Type?         @relation(fields: [typeId], references: [id])
   typeId       Int?
   animes       Anime[]
