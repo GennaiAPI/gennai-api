@@ -78,16 +78,17 @@ model Universe {
 }
 
 model Anime {
-  id              Int         @id @default(autoincrement())
-  title           String      @db.VarChar(255)
+  id              Int          @id @default(autoincrement())
+  title           String       @db.VarChar(255)
   synopsis        String
   originalAirDate DateTime
   episodes        Episode[]
   digimons        Digimon[]
   digivices       Digivice[]
   characters      Character[]
+  digimentals     Digimental[]
   crests          Crest[]
-  universe        Universe    @relation(fields: [universeId], references: [id])
+  universe        Universe     @relation(fields: [universeId], references: [id])
   universeId      Int
 }
 
@@ -103,25 +104,27 @@ model Episode {
 }
 
 model Movie {
-  id              Int         @id @default(autoincrement())
-  title           String      @db.VarChar(255)
+  id              Int          @id @default(autoincrement())
+  title           String       @db.VarChar(255)
   synopsis        String
   originalAirDate DateTime
-  universe        Universe    @relation(fields: [universeId], references: [id])
+  universe        Universe     @relation(fields: [universeId], references: [id])
   universeId      Int
   characters      Character[]
   digimons        Digimon[]
   digivices       Digivice[]
+  crests          Crest[]
+  digimentals     Digimental[]
 }
 
 model Character {
-  id             Int         @id @default(autoincrement())
-  name           String      @db.VarChar(255)
+  id             Int          @id @default(autoincrement())
+  name           String       @db.VarChar(255)
   isDigiDestined Boolean
   animes         Anime[]
   digivices      Digivice[]
-  crest          Crest?
-  digimental     Digimental?
+  crests         Crest[]
+  digimentals    Digimental[]
   universes      Universe[]
   episodes       Episode[]
   movies         Movie[]
@@ -143,22 +146,23 @@ enum DigiviceType {
 }
 
 model Crest {
-  id             Int        @id @default(autoincrement())
-  name           String     @db.VarChar(255)
-  description    String
-  digiDestined   Character  @relation(fields: [digiDestinedId], references: [id])
-  digiDestinedId Int        @unique
-  animes         Anime[]
-  digimental     Digimental @relation(fields: [digimentalId], references: [id])
-  digimentalId   Int        @unique
+  id            Int         @id @default(autoincrement())
+  name          String      @db.VarChar(255)
+  description   String
+  digiDestineds Character[]
+  animes        Anime[]
+  movies        Movie[]
+  digimental    Digimental  @relation(fields: [digimentalId], references: [id])
+  digimentalId  Int         @unique
 }
 
 model Digimental {
-  id             Int       @id @default(autoincrement())
-  name           String    @db.VarChar(255)
-  description    String
-  digiDestined   Character @relation(fields: [digiDestinedId], references: [id])
-  digiDestinedId Int       @unique
-  digimons       Digimon[]
-  crest          Crest?
+  id            Int         @id @default(autoincrement())
+  name          String      @db.VarChar(255)
+  description   String
+  digiDestineds Character[]
+  digimons      Digimon[]
+  animes        Anime[]
+  movies        Movie[]
+  crest         Crest?
 }
