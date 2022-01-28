@@ -61,7 +61,7 @@ const resolvers = {
         name: args.name
       }
     }),
-    getDigimons: (prt, args, ctx, info) => prisma.digimon.findMany({
+    getDigimon: (prt, args, ctx, info) => prisma.digimon.findMany({
       ...getOptions(args?.options)
     }),
     getDigimonById: (prt, args, ctx, info) => prisma.digimon.findUnique({
@@ -70,6 +70,19 @@ const resolvers = {
       }
     }),
     getDigimonByName: (prt, args, ctx, info) => prisma.digimon.findUnique({
+      where: {
+        name: args.name
+      }
+    }),
+    getDigimonGroups: (prt, args, ctx, info) => prisma.digimonGroup.findMany({
+      ...getOptions(args?.options)
+    }),
+    getDigimonGroupById: (prt, args, ctx, info) => prisma.digimonGroup.findUnique({
+      where: {
+        id: args.id
+      }
+    }),
+    getDigimonGroupByName: (prt, args, ctx, info) => prisma.digimonGroup.findUnique({
       where: {
         name: args.name
       }
@@ -186,8 +199,8 @@ const resolvers = {
     createField: (parent, args, ctx, info) => prisma.field.create({
       data: {
         ...args.data,
-        digimons: {
-          connect: args?.data?.digimons?.map(d => {
+        digimon: {
+          connect: args?.data?.digimon?.map(d => {
             return {
               where: {
                 id: parseInt(d.id)
@@ -198,11 +211,11 @@ const resolvers = {
       }
     }),
     updateField: async (parent, args, ctx, info) => {
-      const oDigimons = await prisma.field.findUnique({
+      const oDigimon = await prisma.field.findUnique({
         where: {
           id: parseInt(args.data.id)
         }
-      }).digimons()
+      }).digimon()
 
       return prisma.field.update({
         where: {
@@ -212,7 +225,7 @@ const resolvers = {
           name: args.data.name,
           symbol: args.data.symbol,
           description: args.data.description,
-          ...getConnectAndDisconnect(oDigimons, args.data.digimons, 'digimons')
+          ...getConnectAndDisconnect(oDigimon, args.data.digimon, 'digimon')
         }
       })
     },
@@ -222,7 +235,7 @@ const resolvers = {
       }
     }),
     // Rank
-    // Não pode adicionar: 'digimons'
+    // Não pode adicionar: 'digimon'
     createRank: (parent, args, ctx, info) => prisma.rank.create({
       data: {
         ...args.data
@@ -243,7 +256,7 @@ const resolvers = {
       }
     }),
     // Attribute
-    // Não pode adicionar: 'digimons'
+    // Não pode adicionar: 'digimon'
     createAttribute: (parent, args, ctx, info) => prisma.attribute.create({
       data: {
         ...args.data,
@@ -294,7 +307,7 @@ const resolvers = {
       }
     }),
     // Type
-    // Não pode adicionar: 'digimons'
+    // Não pode adicionar: 'digimon'
     createType: (parent, args, ctx, info) => prisma.type.create({
       data: {
         ...args.data
@@ -394,25 +407,34 @@ const resolvers = {
             }
           })
         },
+        groups: {
+          connect: args?.data?.groups?.map(g => {
+            return {
+              where: {
+                id: parseInt(g.id)
+              }
+            }
+          })
+        }
       }
     }),
-    updateDigimon: (parent, args, ctx, info) => {
+    updateDigimon: async (parent, args, ctx, info) => {
       const currentDigimon = prisma.digimon.findUnique({
         where: {
           id: parseInt(args.data.id)
         }
       })
-      const oRank = currentDigimon.rank()
-      const oAttribute = currentDigimon.attribute()
-      const oType = currentDigimon.type()
-      const oDigimental = currentDigimon.digimental()
-      const oPrior = currentDigimon.prior()
-      const oNext = currentDigimon.next()
-      const oFields = currentDigimon.fields()
-      const oSeries = currentDigimon.series()
-      const oEpisodes = currentDigimon.episodes()
-      const oMovies = currentDigimon.movies()
-
+      const oRank = await currentDigimon.rank()
+      const oAttribute = await currentDigimon.attribute()
+      const oType = await currentDigimon.type()
+      const oDigimental = await currentDigimon.digimental()
+      const oPrior = await currentDigimon.prior()
+      const oNext = await currentDigimon.next()
+      const oFields = await currentDigimon.fields()
+      const oSeries = await currentDigimon.series()
+      const oEpisodes = await currentDigimon.episodes()
+      const oMovies = await currentDigimon.movies()
+      const oGroups = await currentDigimon.groups()
       return prisma.digimon.update({
         where: {
           id: parseInt(args.data.id)
@@ -432,6 +454,7 @@ const resolvers = {
           ...getConnectAndDisconnect(oSeries, args.data.series, 'series'),
           ...getConnectAndDisconnect(oEpisodes, args.data.episodes, 'episodes'),
           ...getConnectAndDisconnect(oMovies, args.data.movies, 'movies'),
+          ...getConnectAndDisconnect(oGroups, args.data.groups, 'groups'),
         }
       })
     },
@@ -473,6 +496,43 @@ const resolvers = {
         id: args.id
       }
     }),
+    // DigimonGroup
+    createDigimonGroup: (parent, args, ctx, info) => prisma.digimonGroup.create({
+      data: {
+        ...args.data,
+        digimon: {
+          connect: args?.data?.digimon?.map(d => {
+            return {
+              where: {
+                id: parseInt(d.id)
+              }
+            }
+          })
+        },
+      }
+    }),
+    updateDigimonGroup: async (parent, args, ctx, info) => {
+      const oDigimon = await prisma.digimonGroup.findUnique({
+        where: {
+          id: parseInt(args.data.id)
+        }
+      }).digimon()
+      return prisma.digimonGroup.update({
+        where: {
+          id: parseInt(args.data.id)
+        },
+        data: {
+          name: args.data.name,
+          description: args.data.description,
+          ...getConnectAndDisconnect(oDigimon, args.data.digimon, 'digimon'),
+        }
+      })
+    },
+    deleteDigimonGroup: (parent, args, ctx, info) => prisma.digimonGroup.delete({
+      where: {
+        id: args.id
+      }
+    }),
     // Universe
     // Não pode adicionar: 'series', 'movies'
     createUniverse: (parent, args, ctx, info) => prisma.universe.create({
@@ -503,8 +563,8 @@ const resolvers = {
             id: parseInt(args?.data?.universe?.id)
           }
         },
-        digimons: {
-          connect: args?.data?.digimons?.map(d => {
+        digimon: {
+          connect: args?.data?.digimon?.map(d => {
             return {
               where: {
                 id: parseInt(d.id)
@@ -547,7 +607,7 @@ const resolvers = {
           id: parseInt(args.data.id)
         }
       })
-      const oDigimons = await currentSeries.digimons()
+      const oDigimon = await currentSeries.digimon()
       const oDigivices = await currentSeries.digivices()
       const oCharacters = await currentSeries.characters()
       const oCrests = await currentSeries.crests()
@@ -562,7 +622,7 @@ const resolvers = {
           synopsis: args?.data?.synopsis,
           originalAirDate: args?.data?.originalAirDate,
           universeId: args?.data?.universe?.id ? parseInt(args.data.universe.id) : oUniverse.id,
-          ...getConnectAndDisconnect(oDigimons, args.data.digimons, 'digimons'),
+          ...getConnectAndDisconnect(oDigimon, args.data.digimon, 'digimon'),
           ...getConnectAndDisconnect(oDigivices, args.data.digivices, 'digivices'),
           ...getConnectAndDisconnect(oCharacters, args.data.characters, 'characters'),
           ...getConnectAndDisconnect(oCrests, args.data.crests, 'crests'),
@@ -592,8 +652,8 @@ const resolvers = {
             }
           })
         },
-        digimons: {
-          connect: args?.data?.digimons?.map(d => {
+        digimon: {
+          connect: args?.data?.digimon?.map(d => {
             return {
               where: {
                 id: parseInt(d.id)
@@ -611,7 +671,7 @@ const resolvers = {
       })
       const oSeries = await currentEpisode.series()
       const oCharacters = await currentEpisode.characters()
-      const oDigimons = await currentEpisode.digimons()
+      const oDigimon = await currentEpisode.digimon()
       return prisma.series.update({
         where: {
           id: parseInt(args.data.id)
@@ -622,7 +682,7 @@ const resolvers = {
           originalAirDate: args?.data?.originalAirDate,
           seriesId: args?.data?.series?.id ? parseInt(args.data.series.id) : oSeries.id,
           ...getConnectAndDisconnect(oCharacters, args.data.characters, 'characters'),
-          ...getConnectAndDisconnect(oDigimons, args.data.digimons, 'digimons'),
+          ...getConnectAndDisconnect(oDigimon, args.data.digimon, 'digimon'),
         }
       })
     },
@@ -649,8 +709,8 @@ const resolvers = {
             }
           })
         },
-        digimons: {
-          connect: args?.data?.digimons?.map(d => {
+        digimon: {
+          connect: args?.data?.digimon?.map(d => {
             return {
               where: {
                 id: parseInt(d.id)
@@ -677,7 +737,7 @@ const resolvers = {
       })
       const oUniverse = await currentMovie.universe()
       const oCharacters = await currentMovie.characters()
-      const oDigimons = await currentMovie.digimons()
+      const oDigimon = await currentMovie.digimon()
       const oDigivices = await currentMovie.digivices()
       return prisma.series.update({
         where: {
@@ -689,7 +749,7 @@ const resolvers = {
           originalAirDate: args?.data?.originalAirDate,
           universeId: args?.data?.universe?.id ? parseInt(args.data.universe.id) : oUniverse.id,
           ...getConnectAndDisconnect(oCharacters, args.data.characters, 'characters'),
-          ...getConnectAndDisconnect(oDigimons, args.data.digimons, 'digimons'),
+          ...getConnectAndDisconnect(oDigimon, args.data.digimon, 'digimon'),
           ...getConnectAndDisconnect(oDigivices, args.data.digivices, 'digivices'),
         }
       })
@@ -766,6 +826,9 @@ const resolvers = {
             }
           })
         },
+        otherNames: {
+          create: args?.data?.otherNames
+        },
       }
     }),
     updateCharacter: async (parent, args, ctx, info) => {
@@ -797,6 +860,39 @@ const resolvers = {
       })
     },
     deleteCharacter: (parent, args, ctx, info) => prisma.character.delete({
+      where: {
+        id: args.id
+      }
+    }),
+    // CharacterName
+    createCharacterName: (parent, args, ctx, info) => prisma.characterName.create({
+      data: {
+        ...args.data,
+        character: {
+          connect: {
+            id: parseInt(args?.data?.character?.id)
+          }
+        },
+      }
+    }),
+    updateCharacterName: async (parent, args, ctx, info) => {
+      const oCharacter = await prisma.characterName.findUnique({
+        where: {
+          id: parseInt(args.data.id)
+        }
+      }).character()
+      return prisma.characterName.update({
+        where: {
+          id: parseInt(args.data.id)
+        },
+        data: {
+          name: args.data.name,
+          lang: args.data.lang,
+          characterId: args?.data?.character?.id ? parseInt(args.data.character.id) : oCharacter
+        }
+      })
+    },
+    deleteCharacterName: (parent, args, ctx, info) => prisma.characterName.delete({
       where: {
         id: args.id
       }
@@ -929,8 +1025,8 @@ const resolvers = {
             }
           })
         },
-        digimons: {
-          connect: args?.data?.digimons?.map(d => {
+        digimon: {
+          connect: args?.data?.digimon?.map(d => {
             return {
               where: {
                 id: parseInt(d.id)
@@ -949,7 +1045,7 @@ const resolvers = {
       const oSeries = await currentDigimental.series()
       const oDigiDestineds = await currentDigimental.digiDestineds()
       const oDigimental = await currentDigimental.digimental()
-      const oDigimons = await currentDigimental.digimons()
+      const oDigimon = await currentDigimental.digimon()
       const oMovies = await currentDigimental.movies()
       return prisma.series.update({
         where: {
@@ -960,7 +1056,7 @@ const resolvers = {
           description: args?.data?.description,
           digimentalId: args?.data?.digimental?.id ? parseInt(args.data.digimental.id) : oDigimental.id,
           ...getConnectAndDisconnect(oDigiDestineds, args.data.digiDestineds, 'digiDestineds'),
-          ...getConnectAndDisconnect(oDigimons, args.data.digimons, 'digimons'),
+          ...getConnectAndDisconnect(oDigimon, args.data.digimon, 'digimon'),
           ...getConnectAndDisconnect(oSeries, args.data.series, 'series'),
           ...getConnectAndDisconnect(oMovies, args.data.movies, 'movies'),
         }
@@ -973,18 +1069,18 @@ const resolvers = {
     }),
   },
   Field: {
-    digimons: (parent, args, ctx, info) => prisma.field.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.field.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
   },
   Rank: {
-    digimons: (parent, args, ctx, info) => prisma.rank.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.rank.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
   },
   Attribute: {
     strong: (parent, args, ctx, info) => prisma.attribute.findUnique({
@@ -997,18 +1093,18 @@ const resolvers = {
         id: parent.id
       }
     }).weak(),
-    digimons: (parent, args, ctx, info) => prisma.attribute.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.attribute.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons()
+    }).digimon()
   },
   Type: {
-    digimons: (parent, args, ctx, info) => prisma.type.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.type.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
   },
   Digimon: {
     otherNames: (parent, args, ctx, info) => prisma.digimon.findUnique({
@@ -1066,9 +1162,21 @@ const resolvers = {
         id: parent.id
       }
     }).digimental(),
+    groups: (parent, args, ctx, info) => prisma.digimon.findUnique({
+      where: {
+        id: parent.id
+      }
+    }).groups(),
   },
   DigimonName: {
     digimon: (parent, args, ctx, info) => prisma.digimonName.findUnique({
+      where: {
+        id: parent.id
+      }
+    }).digimon(),
+  },
+  DigimonGroup: {
+    digimon: (parent, args, ctx, info) => prisma.digimonGroup.findUnique({
       where: {
         id: parent.id
       }
@@ -1097,11 +1205,11 @@ const resolvers = {
         id: parent.id
       }
     }).episodes(),
-    digimons: (parent, args, ctx, info) => prisma.series.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.series.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
     digivices: (parent, args, ctx, info) => prisma.series.findUnique({
       where: {
         id: parent.id
@@ -1139,11 +1247,11 @@ const resolvers = {
         id: parent.id
       }
     }).characters(),
-    digimons: (parent, args, ctx, info) => prisma.episode.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.episode.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
   },
   Movie: {
     universe: (parent, args, ctx, info) => prisma.movie.findUnique({
@@ -1156,11 +1264,11 @@ const resolvers = {
         id: parent.id
       }
     }).characters(),
-    digimons: (parent, args, ctx, info) => prisma.movie.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.movie.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
     digivices: (parent, args, ctx, info) => prisma.movie.findUnique({
       where: {
         id: parent.id
@@ -1214,6 +1322,13 @@ const resolvers = {
       }
     }).movies(),
   },
+  CharacterName: {
+    character: (parent, args, ctx, info) => prisma.characterName.findUnique({
+      where: {
+        id: parent.id
+      }
+    }).character(),
+  },
   Digivice: {
     type: (parent, args, ctx, info) => DigiviceType[parent.type],
     series: (parent, args, ctx, info) => prisma.digivice.findUnique({
@@ -1255,11 +1370,11 @@ const resolvers = {
         id: parent.id
       }
     }).digiDestineds(),
-    digimons: (parent, args, ctx, info) => prisma.digimental.findUnique({
+    digimon: (parent, args, ctx, info) => prisma.digimental.findUnique({
       where: {
         id: parent.id
       }
-    }).digimons(),
+    }).digimon(),
     series: (parent, args, ctx, info) => prisma.digimental.findUnique({
       where: {
         id: parent.id
