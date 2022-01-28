@@ -418,7 +418,7 @@ const resolvers = {
         }
       }
     }),
-    updateDigimon: (parent, args, ctx, info) => {
+    updateDigimon: async (parent, args, ctx, info) => {
       const currentDigimon = prisma.digimon.findUnique({
         where: {
           id: parseInt(args.data.id)

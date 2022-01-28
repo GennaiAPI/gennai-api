@@ -358,6 +358,10 @@ const typeDefs = gql`
     getDigimon(options: OptionsInput): [Digimon]
     getDigimonById(id: Int!, options: OptionsInput): Digimon!
     getDigimonByName(name: String!, options: OptionsInput): Digimon!
+    # DigimonGroups
+    getDigimonGroups(options: OptionsInput): [DigimonGroup]
+    getDigimonGroupById(id: Int!, options: OptionsInput): DigimonGroup!
+    getDigimonGroupByName(name: String!, options: OptionsInput): DigimonGroup!
     # Universes
     getUniverses(options: OptionsInput): [Universe]
     getUniverseById(id: Int!, options: OptionsInput): Universe!
@@ -412,6 +416,9 @@ const typeDefs = gql`
     createDigimonName(data: DigimonNameInput!): DigimonName!
     updateDigimonName(data: DigimonNameInput!): DigimonName!
     deleteDigimonName(id: Int!): DigimonName!
+    createDigimonGroup(data: DigimonGroupInput!): DigimonGroup!
+    updateDigimonGroup(data: DigimonGroupInput!): DigimonGroup!
+    deleteDigimonGroup(id: Int!): DigimonGroup!
     createUniverse(data: UniverseInput!): Universe!
     updateUniverse(data: UniverseInput!): Universe!
     deleteUniverse(id: Int!): Universe!
@@ -427,6 +434,9 @@ const typeDefs = gql`
     createCharacter(data: CharacterInput!): Character!
     updateCharacter(data: CharacterInput!): Character!
     deleteCharacter(id: Int!): Character!
+    createCharacterName(data: CharacterNameInput!): CharacterName!
+    updateCharacterName(data: CharacterNameInput!): CharacterName!
+    deleteCharacterName(id: Int!): CharacterName!
     createDigivice(data: DigiviceInput!): Digivice!
     updateDigivice(data: DigiviceInput!): Digivice!
     deleteDigivice(id: Int!): Digivice!
