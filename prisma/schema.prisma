@@ -12,14 +12,14 @@ model Field {
   name        String    @unique @db.VarChar(255)
   symbol      String    @db.VarChar(255)
   description String
-  digimons    Digimon[]
+  digimon     Digimon[]
 }
 
 model Rank {
   id          Int       @id @default(autoincrement())
   name        String    @db.VarChar(255)
   description String
-  digimons    Digimon[]
+  digimon     Digimon[]
 }
 
 model Attribute {
@@ -29,36 +29,37 @@ model Attribute {
   description String
   strong      Attribute[] @relation("AttrWeakStrong", references: [id])
   weak        Attribute[] @relation("AttrWeakStrong", references: [id])
-  digimons    Digimon[]
+  digimon     Digimon[]
 }
 
 model Type {
-  id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(255)
-  digimons Digimon[]
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(255)
+  digimon Digimon[]
 }
 
 model Digimon {
-  id           Int           @id @default(autoincrement())
-  slug         String        @unique @db.VarChar(255)
-  name         String        @unique @db.VarChar(255)
+  id           Int            @id @default(autoincrement())
+  slug         String         @unique @db.VarChar(255)
+  name         String         @unique @db.VarChar(255)
   otherNames   DigimonName[]
-  isJogress    Boolean       @default(false)
-  hasXAntibody Boolean       @default(false)
-  prior        Digimon[]     @relation("PriorNext", references: [id])
-  next         Digimon[]     @relation("PriorNext", references: [id])
-  rank         Rank          @relation(fields: [rankId], references: [id])
+  isJogress    Boolean        @default(false)
+  hasXAntibody Boolean        @default(false)
+  prior        Digimon[]      @relation("PriorNext", references: [id])
+  next         Digimon[]      @relation("PriorNext", references: [id])
+  rank         Rank           @relation(fields: [rankId], references: [id])
   rankId       Int
-  attribute    Attribute     @relation(fields: [attributeId], references: [id])
+  attribute    Attribute      @relation(fields: [attributeId], references: [id])
   attributeId  Int
   fields       Field[]
-  type         Type?         @relation(fields: [typeId], references: [id])
+  type         Type?          @relation(fields: [typeId], references: [id])
   typeId       Int?
   series       Series[]
   episodes     Episode[]
   movies       Movie[]
-  digimental   Digimental?   @relation(fields: [digimentalId], references: [id])
+  digimental   Digimental?    @relation(fields: [digimentalId], references: [id])
   digimentalId Int?
+  groups       DigimonGroup[]
 }
 
 model DigimonName {
@@ -67,6 +68,13 @@ model DigimonName {
   name      String
   digimon   Digimon @relation(fields: [digimonId], references: [id])
   digimonId Int
+}
+
+model DigimonGroup {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  digimon     Digimon[]
 }
 
 model Universe {
@@ -83,7 +91,7 @@ model Series {
   synopsis        String
   originalAirDate DateTime
   episodes        Episode[]
-  digimons        Digimon[]
+  digimon         Digimon[]
   digivices       Digivice[]
   characters      Character[]
   digimentals     Digimental[]
@@ -100,7 +108,7 @@ model Episode {
   series          Series      @relation(fields: [seriesId], references: [id])
   seriesId        Int
   characters      Character[]
-  digimons        Digimon[]
+  digimon         Digimon[]
 }
 
 model Movie {
@@ -111,15 +119,15 @@ model Movie {
   universe        Universe     @relation(fields: [universeId], references: [id])
   universeId      Int
   characters      Character[]
-  digimons        Digimon[]
+  digimon         Digimon[]
   digivices       Digivice[]
   crests          Crest[]
   digimentals     Digimental[]
 }
 
 model Character {
-  id             Int          @id @default(autoincrement())
-  name           String       @db.VarChar(255)
+  id             Int             @id @default(autoincrement())
+  name           String          @db.VarChar(255)
   isDigiDestined Boolean
   series         Series[]
   digivices      Digivice[]
@@ -128,6 +136,15 @@ model Character {
   universes      Universe[]
   episodes       Episode[]
   movies         Movie[]
+  otherNames     CharacterName[]
+}
+
+model CharacterName {
+  id          Int       @id @default(autoincrement())
+  lang        String
+  name        String
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
 }
 
 model Digivice {
@@ -161,7 +178,7 @@ model Digimental {
   name          String      @db.VarChar(255)
   description   String
   digiDestineds Character[]
-  digimons      Digimon[]
+  digimon       Digimon[]
   series        Series[]
   movies        Movie[]
   crest         Crest?
