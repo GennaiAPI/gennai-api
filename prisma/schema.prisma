@@ -51,10 +51,10 @@ model Digimon {
   rankId       Int
   attribute    Attribute     @relation(fields: [attributeId], references: [id])
   attributeId  Int
-  fields     Field[]
+  fields       Field[]
   type         Type?         @relation(fields: [typeId], references: [id])
   typeId       Int?
-  animes       Anime[]
+  series       Series[]
   episodes     Episode[]
   movies       Movie[]
   digimental   Digimental?   @relation(fields: [digimentalId], references: [id])
@@ -72,12 +72,12 @@ model DigimonName {
 model Universe {
   id         Int         @id @default(autoincrement())
   name       String      @db.VarChar(255)
-  animes     Anime[]
+  series     Series[]
   movies     Movie[]
   characters Character[]
 }
 
-model Anime {
+model Series {
   id              Int          @id @default(autoincrement())
   title           String       @db.VarChar(255)
   synopsis        String
@@ -97,8 +97,8 @@ model Episode {
   title           String      @db.VarChar(255)
   synopsis        String
   originalAirDate DateTime
-  anime           Anime       @relation(fields: [animeId], references: [id])
-  animeId         Int
+  series          Series      @relation(fields: [seriesId], references: [id])
+  seriesId        Int
   characters      Character[]
   digimons        Digimon[]
 }
@@ -121,7 +121,7 @@ model Character {
   id             Int          @id @default(autoincrement())
   name           String       @db.VarChar(255)
   isDigiDestined Boolean
-  animes         Anime[]
+  series         Series[]
   digivices      Digivice[]
   crests         Crest[]
   digimentals    Digimental[]
@@ -136,7 +136,7 @@ model Digivice {
   digiDestinedId Int
   colors         String[]     @db.VarChar(255)
   type           DigiviceType
-  animes         Anime[]
+  series         Series[]
   movies         Movie[]
 }
 
@@ -150,7 +150,7 @@ model Crest {
   name          String      @db.VarChar(255)
   description   String
   digiDestineds Character[]
-  animes        Anime[]
+  series        Series[]
   movies        Movie[]
   digimental    Digimental  @relation(fields: [digimentalId], references: [id])
   digimentalId  Int         @unique
@@ -162,7 +162,7 @@ model Digimental {
   description   String
   digiDestineds Character[]
   digimons      Digimon[]
-  animes        Anime[]
+  series        Series[]
   movies        Movie[]
   crest         Crest?
 }

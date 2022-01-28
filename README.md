@@ -3,12 +3,12 @@
 Gennai is an API about the Digimon franchise. It was made on [NodeJS](https://nodejs.org/en/), using [GraphQL](https://graphql.org/) and technologies such as [Prisma](https://www.prisma.io/), [Apollo](https://www.apollographql.com/) and [Express](https://expressjs.com/).
 
 ## Content
-The goal of the Gennai API is to gather all the data about the Digimon franchise, that including games, animes, movies, mangas, TCG, digimons and much more.
+The goal of the Gennai API is to gather all the data about the Digimon franchise, that including games, series, movies, mangas, TCG, digimons and much more.
 
 So far, this API only contains data from the Adventure universe (see below), but the main goal is to gather all data from every other universe. 
 
 ## Universe
-Since many works of the franchise take place in different universes, a classification is being used to differentiate conflictual data. For example, the Adventure universe contains data from the animes Digimon Adventure and Digimon Adventure Zero-Two, since both are connected and take place on the same universe, which is not the case of Digimon Tamers or Digimon Frontier.
+Since many works of the franchise take place in different universes, a classification is being used to differentiate conflictual data. For example, the Adventure universe contains data from the series Digimon Adventure and Digimon Adventure Zero-Two, since both are connected and take place on the same universe, which is not the case of Digimon Tamers or Digimon Frontier.
 
 For now, there is only 5 universes in totality, with only 1 (Adventure) working. See disponibility below:
 

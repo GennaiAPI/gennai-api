@@ -79,7 +79,7 @@ const typeDefs = gql`
     prior: [Digimon]
     next: [Digimon]
     fields: [Field]
-    animes: [Anime]
+    series: [Series]
     episodes: [Episode]
     movies: [Movie]
   }
@@ -98,7 +98,7 @@ const typeDefs = gql`
     prior: [DigimonInput]
     next: [DigimonInput]
     fields: [FieldInput]
-    animes: [AnimeInput]
+    series: [SeriesInput]
     episodes: [EpisodeInput]
     movies: [MovieInput]
   }
@@ -120,7 +120,7 @@ const typeDefs = gql`
   type Universe {
     id: ID!
     name: String
-    animes: [Anime]
+    series: [Series]
     movies: [Movie]
     characters: [Character]
   }
@@ -128,12 +128,12 @@ const typeDefs = gql`
   input UniverseInput {
     id: ID
     name: String
-    animes: [AnimeInput]
+    series: [SeriesInput]
     movies: [MovieInput]
     characters: [CharacterInput]
   }
   
-  type Anime {
+  type Series {
     id: ID!
     title: String
     synopsis: String
@@ -147,7 +147,7 @@ const typeDefs = gql`
     characters: [Character]
   }
 
-  input AnimeInput {
+  input SeriesInput {
     id: ID
     title: String
     synopsis: String
@@ -166,7 +166,7 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    anime: Anime
+    series: Series
     characters: [Character]
     digimons: [Digimon]
   }
@@ -176,7 +176,7 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    anime: AnimeInput
+    series: SeriesInput
     characters: [CharacterInput]
     digimons: [DigimonInput]
   }
@@ -213,7 +213,7 @@ const typeDefs = gql`
     isDigiDestined: Boolean
     crests: [Crest]
     digimentals: [Digimental]
-    animes: [Anime]
+    series: [Series]
     digivices: [Digivice]
     universes: [Universe]
     episodes: [Episode]
@@ -226,7 +226,7 @@ const typeDefs = gql`
     isDigiDestined: Boolean
     crests: [CrestInput]
     digimentals: [DigimentalInput]
-    animes: [AnimeInput]
+    series: [SeriesInput]
     digivices: [DigiviceInput]
     universes: [UniverseInput]
     episodes: [EpisodeInput]
@@ -238,7 +238,7 @@ const typeDefs = gql`
     digiDestined: Character
     type: DigiviceType
     colors: [String]
-    animes: [Anime]
+    series: [Series]
     movies: [Movie]
   }
 
@@ -247,7 +247,7 @@ const typeDefs = gql`
     digiDestined: CharacterInput
     type: DigiviceType
     colors: [String]
-    animes: [AnimeInput]
+    series: [SeriesInput]
     movies: [MovieInput]
   }
   
@@ -262,7 +262,7 @@ const typeDefs = gql`
     description: String
     digimental: Digimental
     digiDestineds: [Character]
-    animes: [Anime]
+    series: [Series]
     movies: [Movie]
   }
 
@@ -272,7 +272,7 @@ const typeDefs = gql`
     description: String
     digimental: DigimentalInput
     digiDestineds: [CharacterInput]
-    animes: [AnimeInput]
+    series: [SeriesInput]
     movies: [MovieInput]
   }
   
@@ -282,7 +282,7 @@ const typeDefs = gql`
     description: String
     digiDestineds: [Character]
     digimons: [Digimon]
-    animes: [Anime]
+    series: [Series]
     movies: [Movie]
     crest: Crest
   }
@@ -293,7 +293,7 @@ const typeDefs = gql`
     description: String
     digiDestineds: [CharacterInput]
     digimons: [DigimonInput]
-    animes: [AnimeInput]
+    series: [SeriesInput]
     movies: [MovieInput]
     crest: CrestInput
   }
@@ -330,10 +330,10 @@ const typeDefs = gql`
     getUniverses(options: OptionsInput): [Universe]
     getUniverseById(id: Int!, options: OptionsInput): Universe!
     getUniverseByName(name: String!, options: OptionsInput): Universe!
-    # Animes
-    getAnimes(options: OptionsInput): [Anime]
-    getAnimeById(id: Int!, options: OptionsInput): Anime!
-    getAnimeByTitle(title: String!, options: OptionsInput): Anime
+    # Series
+    getSeries(options: OptionsInput): [Series]
+    getSeriesById(id: Int!, options: OptionsInput): Series!
+    getSeriesByTitle(title: String!, options: OptionsInput): Series
     # Episodes
     getEpisodes(options: OptionsInput): [Episode]
     getEpisodeById(id: Int!, options: OptionsInput): Episode!
@@ -383,9 +383,9 @@ const typeDefs = gql`
     createUniverse(data: UniverseInput!): Universe!
     updateUniverse(data: UniverseInput!): Universe!
     deleteUniverse(id: Int!): Universe!
-    createAnime(data: AnimeInput!): Anime!
-    updateAnime(data: AnimeInput!): Anime!
-    deleteAnime(id: Int!): Anime!
+    createSeries(data: SeriesInput!): Series!
+    updateSeries(data: SeriesInput!): Series!
+    deleteSeries(id: Int!): Series!
     createEpisode(data: EpisodeInput!): Episode!
     updateEpisode(data: EpisodeInput!): Episode!
     deleteEpisode(id: Int!): Episode!
