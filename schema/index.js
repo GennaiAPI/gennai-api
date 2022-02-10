@@ -75,14 +75,16 @@ const typeDefs = gql`
     attribute: Attribute
     type: Type
     digimental: Digimental
-    otherNames: [DigimonName]
-    prior: [Digimon]
-    next: [Digimon]
-    fields: [Field]
+    movies: [Movie]
     series: [Series]
     episodes: [Episode]
-    movies: [Movie]
+    fields: [Field]
+    spirits: [Spirit]
+    partners: [Character]
+    previous: [Digimon]
+    next: [Digimon]
     groups: [DigimonGroup]
+    otherNames: [DigimonName]
   }
 
   input DigimonInput {
@@ -95,14 +97,16 @@ const typeDefs = gql`
     attribute: AttributeInput
     type: TypeInput
     digimental: DigimentalInput
-    otherNames: [DigimonNameInput]
-    prior: [DigimonInput]
-    next: [DigimonInput]
-    fields: [FieldInput]
+    movies: [MovieInput]
     series: [SeriesInput]
     episodes: [EpisodeInput]
-    movies: [MovieInput]
+    fields: [FieldInput]
+    spirits: [SpiritInput]
+    partners: [CharacterInput]
+    previous: [DigimonInput]
+    next: [DigimonInput]
     groups: [DigimonGroupInput]
+    otherNames: [DigimonNameInput]
   }
 
   type DigimonName {
@@ -154,13 +158,10 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    universe: Universe
-    crests: [Crest]
-    digimentals: [Digimental]
     episodes: [Episode]
     digimon: [Digimon]
-    digivices: [Digivice]
     characters: [Character]
+    universe: Universe
   }
 
   input SeriesInput {
@@ -168,13 +169,10 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    universe: UniverseInput
-    crests: [CrestInput]
-    digimentals: [DigimentalInput]
     episodes: [EpisodeInput]
     digimon: [DigimonInput]
-    digivices: [DigiviceInput]
     characters: [CharacterInput]
+    universe: UniverseInput
   }
   
   type Episode {
@@ -182,9 +180,9 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    series: Series
-    characters: [Character]
     digimon: [Digimon]
+    characters: [Character]
+    series: Series
   }
   
   input EpisodeInput {
@@ -192,9 +190,9 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    series: SeriesInput
-    characters: [CharacterInput]
     digimon: [DigimonInput]
+    characters: [CharacterInput]
+    series: SeriesInput
   }
   
   type Movie {
@@ -202,12 +200,9 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    universe: Universe
-    characters: [Character]
     digimon: [Digimon]
-    digivices: [Digivice]
-    crests: [Crest]
-    digimentals: [Digimental]
+    characters: [Character]
+    universe: Universe
   }
 
   input MovieInput {
@@ -215,25 +210,24 @@ const typeDefs = gql`
     title: String
     synopsis: String
     originalAirDate: Date
-    universe: UniverseInput
-    characters: [CharacterInput]
     digimon: [DigimonInput]
-    digivices: [DigiviceInput]
-    crests: [CrestInput]
-    digimentals: [DigimentalInput]
+    characters: [CharacterInput]
+    universe: UniverseInput
   }
   
   type Character {
     id: ID!
     name: String
     isDigiDestined: Boolean
-    crests: [Crest]
-    digimentals: [Digimental]
-    series: [Series]
-    digivices: [Digivice]
-    universes: [Universe]
-    episodes: [Episode]
     movies: [Movie]
+    series: [Series]
+    episodes: [Episode]
+    crests: [Crest]
+    spirits: [Spirit]
+    digivices: [Digivice]
+    digimentals: [Digimental]
+    partners: [Character]
+    universes: [Universe]
     otherNames: [CharacterName]
   }
 
@@ -241,13 +235,15 @@ const typeDefs = gql`
     id: ID
     name: String
     isDigiDestined: Boolean
-    crests: [CrestInput]
-    digimentals: [DigimentalInput]
-    series: [SeriesInput]
-    digivices: [DigiviceInput]
-    universes: [UniverseInput]
-    episodes: [EpisodeInput]
     movies: [MovieInput]
+    series: [SeriesInput]
+    episodes: [EpisodeInput]
+    crests: [CrestInput]
+    spirits: [SpiritInput]
+    digivices: [DigiviceInput]
+    digimentals: [DigimentalInput]
+    partners: [CharacterInput]
+    universes: [UniverseInput]
     otherNames: [CharacterNameInput]
   }
 
@@ -268,54 +264,51 @@ const typeDefs = gql`
   type Digivice {
     id: ID!
     digiDestined: Character
-    type: DigiviceType
     colors: [String]
-    series: [Series]
-    movies: [Movie]
+    type: DigiviceType
   }
 
   input DigiviceInput {
     id: ID
     digiDestined: CharacterInput
-    type: DigiviceType
     colors: [String]
-    series: [SeriesInput]
-    movies: [MovieInput]
+    type: DigiviceType
   }
   
   enum DigiviceType {
     CLASSIC
     D_3
+    D_ARK
+    D_SCANNER
+    IC
+    BURST
+    DARK
+    BIO_HYBRID
   }
   
   type Crest {
     id: ID!
     name: String
     description: String
-    digimental: Digimental
     digiDestineds: [Character]
-    series: [Series]
-    movies: [Movie]
+    digimental: Digimental
   }
 
   input CrestInput {
     id: ID
     name: String
     description: String
-    digimental: DigimentalInput
     digiDestineds: [CharacterInput]
-    series: [SeriesInput]
-    movies: [MovieInput]
+    digimental: DigimentalInput
   }
   
   type Digimental {
     id: ID!
     name: String
     description: String
-    digiDestineds: [Character]
+    attribute: String
+    digiDestined: Character
     digimon: [Digimon]
-    series: [Series]
-    movies: [Movie]
     crest: Crest
   }
 
@@ -323,11 +316,39 @@ const typeDefs = gql`
     id: ID
     name: String
     description: String
-    digiDestineds: [CharacterInput]
+    attribute: String
+    digiDestined: CharacterInput
     digimon: [DigimonInput]
-    series: [SeriesInput]
-    movies: [MovieInput]
     crest: CrestInput
+  }
+
+  type Spirit {
+    id: ID
+    element: SpiritElement
+    isHuman: Boolean
+    digiDestined: Character
+    digimon: Digimon
+  }
+
+  input SpiritInput {
+    id: ID
+    element: SpiritElement
+    isHuman: Boolean
+    digiDestined: CharacterInput
+    digimon: DigimonInput
+  }
+
+  enum SpiritElement {
+    FLAME
+    LIGHT
+    ICE
+    WIND
+    THUNDER
+    EARTH
+    WOOD
+    WATER
+    STEEL
+    DARKNESS
   }
 
   input OptionsInput {
@@ -338,114 +359,137 @@ const typeDefs = gql`
   }
 
   type Query {
-    # Fields
+    # Field
     getFields(options: OptionsInput): [Field]
     getFieldById(id: Int!, options: OptionsInput): Field!
     getFieldByName(name: String!, options: OptionsInput): Field!
-    # Ranks
+    # Rank
     getRanks(options: OptionsInput): [Rank]
     getRankById(id: Int!, options: OptionsInput): Rank!
     getRankByName(name: String!, options: OptionsInput): Rank!
-    # Attributes
+    # Attribute
     getAttributes(options: OptionsInput): [Attribute]
     getAttributeById(id: Int!, options: OptionsInput): Attribute!
     getAttributeByName(name: String!, options: OptionsInput): Attribute!
-    # Types
+    # Type
     getTypes(options: OptionsInput): [Type]
     getTypeById(id: Int!, options: OptionsInput): Type!
     getTypeByName(name: String!, options: OptionsInput): Type!
-    # Digimon
+    # Digimo
     getDigimon(options: OptionsInput): [Digimon]
     getDigimonById(id: Int!, options: OptionsInput): Digimon!
     getDigimonByName(name: String!, options: OptionsInput): Digimon!
-    # DigimonGroups
+    # DigimonGroup
     getDigimonGroups(options: OptionsInput): [DigimonGroup]
     getDigimonGroupById(id: Int!, options: OptionsInput): DigimonGroup!
     getDigimonGroupByName(name: String!, options: OptionsInput): DigimonGroup!
-    # Universes
+    # Universe
     getUniverses(options: OptionsInput): [Universe]
     getUniverseById(id: Int!, options: OptionsInput): Universe!
     getUniverseByName(name: String!, options: OptionsInput): Universe!
-    # Series
+    # Serie
     getSeries(options: OptionsInput): [Series]
     getSeriesById(id: Int!, options: OptionsInput): Series!
     getSeriesByTitle(title: String!, options: OptionsInput): Series
-    # Episodes
+    # Episode
     getEpisodes(options: OptionsInput): [Episode]
     getEpisodeById(id: Int!, options: OptionsInput): Episode!
     getEpisodeByTitle(title: String!, options: OptionsInput): Episode
-    # Movies
+    # Movie
     getMovies(options: OptionsInput): [Movie]
     getMovieById(id: Int!, options: OptionsInput): Movie!
     getMovieByTitle(title: String!, options: OptionsInput): Movie
-    # Characters
+    # Character
     getCharacters(options: OptionsInput): [Character]
     getCharacterById(id: Int!, options: OptionsInput): Character!
     getCharacterByName(name: String!, options: OptionsInput): Character!
-    # Digivices
+    # Digivice
     getDigivices(options: OptionsInput): [Digivice]
     getDigiviceById(id: Int!, options: OptionsInput): Digivice!
     getDigivicesByType(type: DigiviceType!, options: OptionsInput): [Digivice]
     getDigiviceTypes(options: OptionsInput): [DigiviceType]
-    # Crests
+    # Crest
     getCrests(options: OptionsInput): [Crest]
     getCrestById(id: Int!, options: OptionsInput): Crest!
     getCrestByName(name: String!, options: OptionsInput): Crest!
-    # Digimentals
+    # Digimental
     getDigimentals(options: OptionsInput): [Digimental]
     getDigimentalById(id: Int!, options: OptionsInput): Digimental!
     getDigimentalByName(name: String!, options: OptionsInput): Digimental!
+    # Spirit
+    getSpirits(options: OptionsInput): [Spirit]
+    getSpiritById(id: Int!, options: OptionsInput): Spirit!
+    getSpiritsByElement(element: SpiritElement!, options: OptionsInput): [Spirit]
+    getSpiritElements(options: OptionsInput): [SpiritElement]
   }
 
   type Mutation {
+    # Field
     createField(data: FieldInput!): Field!
     updateField(data: FieldInput!): Field!
     deleteField(id: Int!): Field!
+    # Rank
     createRank(data: RankInput!): Rank!
     updateRank(data: RankInput!): Rank!
     deleteRank(id: Int!): Rank!
+    # Attribute
     createAttribute(data: AttributeInput!): Attribute!
     updateAttribute(data: AttributeInput!): Attribute!
     deleteAttribute(id: Int!): Attribute!
+    # Type
     createType(data: TypeInput!): Type!
     updateType(data: TypeInput!): Type!
     deleteType(id: Int!): Type!
+    # Digimo
     createDigimon(data: DigimonInput!): Digimon!
     updateDigimon(data: DigimonInput!): Digimon!
     deleteDigimon(id: Int!): Digimon!
     createDigimonName(data: DigimonNameInput!): DigimonName!
     updateDigimonName(data: DigimonNameInput!): DigimonName!
     deleteDigimonName(id: Int!): DigimonName!
+    # DigimonGroup
     createDigimonGroup(data: DigimonGroupInput!): DigimonGroup!
     updateDigimonGroup(data: DigimonGroupInput!): DigimonGroup!
     deleteDigimonGroup(id: Int!): DigimonGroup!
+    # Universe
     createUniverse(data: UniverseInput!): Universe!
     updateUniverse(data: UniverseInput!): Universe!
     deleteUniverse(id: Int!): Universe!
+    # Serie
     createSeries(data: SeriesInput!): Series!
     updateSeries(data: SeriesInput!): Series!
     deleteSeries(id: Int!): Series!
+    # Episode
     createEpisode(data: EpisodeInput!): Episode!
     updateEpisode(data: EpisodeInput!): Episode!
     deleteEpisode(id: Int!): Episode!
+    # Movie
     createMovie(data: MovieInput!): Movie!
     updateMovie(data: MovieInput!): Movie!
     deleteMovie(id: Int!): Movie!
+    # Character
     createCharacter(data: CharacterInput!): Character!
     updateCharacter(data: CharacterInput!): Character!
     deleteCharacter(id: Int!): Character!
     createCharacterName(data: CharacterNameInput!): CharacterName!
     updateCharacterName(data: CharacterNameInput!): CharacterName!
     deleteCharacterName(id: Int!): CharacterName!
+    # Digivice
     createDigivice(data: DigiviceInput!): Digivice!
     updateDigivice(data: DigiviceInput!): Digivice!
     deleteDigivice(id: Int!): Digivice!
+    # Crest
     createCrest(data: CrestInput!): Crest!
     updateCrest(data: CrestInput!): Crest!
     deleteCrest(id: Int!): Crest!
+    # Digimental
     createDigimental(data: DigimentalInput!): Digimental!
     updateDigimental(data: DigimentalInput!): Digimental!
     deleteDigimental(id: Int!): Digimental!
+    # Spirit
+    createSpirit(data: SpiritInput!): Spirit!
+    updateSpirit(data: SpiritInput!): Spirit!
+    deleteSpirit(id: Int!): Spirit!
   }
 `;
 
