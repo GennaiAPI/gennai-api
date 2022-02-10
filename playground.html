@@ -55,7 +55,9 @@
     <script>
       function graphQLFetcher(graphQLParams) {
         return fetch(
-          `http://gennai.herokuapp.com/graphql${JSON.stringify(graphQLParams)}`,
+          `https://gennai.herokuapp.com/graphql${JSON.stringify(
+            graphQLParams
+          )}`,
           {
             method: "get",
             headers: {
