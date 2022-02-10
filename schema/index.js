@@ -226,7 +226,7 @@ const typeDefs = gql`
     spirits: [Spirit]
     digivices: [Digivice]
     digimentals: [Digimental]
-    partners: [Character]
+    partners: [Digimon]
     universes: [Universe]
     otherNames: [CharacterName]
   }
@@ -242,7 +242,7 @@ const typeDefs = gql`
     spirits: [SpiritInput]
     digivices: [DigiviceInput]
     digimentals: [DigimentalInput]
-    partners: [CharacterInput]
+    partners: [DigimonInput]
     universes: [UniverseInput]
     otherNames: [CharacterNameInput]
   }
