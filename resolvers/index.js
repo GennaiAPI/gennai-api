@@ -1374,11 +1374,11 @@ const resolvers = {
     }).digimental(),
   },
   Digimental: {
-    digiDestineds: (parent, args, ctx, info) => prisma.digimental.findUnique({
+    digiDestined: (parent, args, ctx, info) => prisma.digimental.findUnique({
       where: {
         id: parent.id
       }
-    }).digiDestineds(),
+    }).digiDestined(),
     digimon: (parent, args, ctx, info) => prisma.digimental.findUnique({
       where: {
         id: parent.id
