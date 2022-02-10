@@ -10,6 +10,8 @@ import typeDefs from './schema/index.js';
 const startServer = async () => {
   const app = express();
 
+  app.use('/playground', express.static('playground.html'))
+
   app.use(cors({
     preflightContinue: true,
     credentials: true,
