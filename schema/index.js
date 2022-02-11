@@ -375,7 +375,7 @@ const typeDefs = gql`
     getTypes(options: OptionsInput): [Type]
     getTypeById(id: Int!, options: OptionsInput): Type
     getTypeByName(name: String!, options: OptionsInput): Type
-    # Digimo
+    # Digimon
     getDigimon(options: OptionsInput): [Digimon]
     getDigimonById(id: Int!, options: OptionsInput): Digimon
     getDigimonByName(name: String!, options: OptionsInput): Digimon
@@ -402,7 +402,7 @@ const typeDefs = gql`
     # Character
     getCharacters(options: OptionsInput): [Character]
     getCharacterById(id: Int!, options: OptionsInput): Character
-    getCharacterByName(name: String!, options: OptionsInput): Character!
+    getCharacterByName(name: String!, options: OptionsInput): Character
     # Digivice
     getDigivices(options: OptionsInput): [Digivice]
     getDigiviceById(id: Int!, options: OptionsInput): Digivice
