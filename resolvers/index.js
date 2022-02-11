@@ -232,9 +232,7 @@ const resolvers = {
         digimon: {
           connect: args?.data?.digimon?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         }
@@ -293,9 +291,7 @@ const resolvers = {
         strong: {
           connect: args?.data?.strong?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
@@ -383,81 +379,63 @@ const resolvers = {
         movies: {
           connect: args?.data?.movies?.map(m => {
             return {
-              where: {
-                id: parseInt(m.id)
-              }
+              id: parseInt(m.id)
             }
           })
         },
         series: {
           connect: args?.data?.series?.map(a => {
             return {
-              where: {
-                id: parseInt(a.id)
-              }
+              id: parseInt(a.id)
             }
           })
         },
         episodes: {
           connect: args?.data?.episodes?.map(e => {
             return {
-              where: {
-                id: parseInt(e.id)
-              }
+              id: parseInt(e.id)
             }
           })
         },
         fields: {
           connect: args?.data?.fields?.map(f => {
             return {
-              where: {
-                id: parseInt(f.id)
-              }
+              id: parseInt(f.id)
             }
           })
         },
         spirits: {
           connect: args?.data?.spirits?.map(s => {
             return {
-              where: {
-                id: parseInt(s.id)
-              }
+              id: parseInt(s.id)
             }
           })
         },
         partners: {
           connect: args?.data?.partners?.map(p => {
             return {
-              where: {
-                id: parseInt(p.id)
-              }
+              id: parseInt(p.id)
             }
           })
         },
         previous: {
           connect: args?.data?.previous?.map(p => {
             return {
-              where: {
-                id: parseInt(p.id)
-              }
+              id: parseInt(p.id)
             }
           })
         },
         next: {
           connect: args?.data?.next?.map(n => {
             return {
-              where: {
-                id: parseInt(n.id)
-              }
+              id: parseInt(n.id)
             }
           })
         },
         groups: {
           connect: args?.data?.groups?.map(g => {
             return {
-              where: {
-                id: parseInt(g.id)
-              }
+              id: parseInt(g.id)
             }
           })
         },
@@ -555,9 +533,7 @@ const resolvers = {
         digimon: {
           connect: args?.data?.digimon?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
@@ -613,18 +589,14 @@ const resolvers = {
         digimon: {
           connect: args?.data?.digimon?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
         characters: {
           connect: args?.data?.characters?.map(c => {
             return {
-              where: {
-                id: parseInt(c.id)
-              }
+              id: parseInt(c.id)
             }
           })
         },
@@ -671,18 +643,14 @@ const resolvers = {
         digimon: {
           connect: args?.data?.digimon?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
         characters: {
           connect: args?.data?.characters?.map(c => {
             return {
-              where: {
-                id: parseInt(c.id)
-              }
+              id: parseInt(c.id)
             }
           })
         },
@@ -702,7 +670,7 @@ const resolvers = {
       const oSeries = await currentEpisode.series()
       const oDigimon = await currentEpisode.digimon()
       const oCharacters = await currentEpisode.characters()
-      return prisma.series.update({
+      return prisma.episode.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -728,18 +696,14 @@ const resolvers = {
         digimon: {
           connect: args?.data?.digimon?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
         characters: {
           connect: args?.data?.characters?.map(c => {
             return {
-              where: {
-                id: parseInt(c.id)
-              }
+              id: parseInt(c.id)
             }
           })
         },
@@ -759,7 +723,7 @@ const resolvers = {
       const oUniverse = await currentMovie.universe()
       const oDigimon = await currentMovie.digimon()
       const oCharacters = await currentMovie.characters()
-      return prisma.series.update({
+      return prisma.movie.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -785,81 +749,63 @@ const resolvers = {
         movies: {
           connect: args?.data?.movies?.map(m => {
             return {
-              where: {
-                id: parseInt(m.id)
-              }
+              id: parseInt(m.id)
             }
           })
         },
         series: {
           connect: args?.data?.series?.map(a => {
             return {
-              where: {
-                id: parseInt(a.id)
-              }
+              id: parseInt(a.id)
             }
           })
         },
         episodes: {
           connect: args?.data?.episodes?.map(e => {
             return {
-              where: {
-                id: parseInt(e.id)
-              }
+              id: parseInt(e.id)
             }
           })
         },
         crests: {
           connect: args?.data?.crests?.map(c => {
             return {
-              where: {
-                id: parseInt(c.id)
-              }
+              id: parseInt(c.id)
             }
           })
         },
         spirits: {
           connect: args?.data?.spirits?.map(s => {
             return {
-              where: {
-                id: parseInt(s.id)
-              }
+              id: parseInt(s.id)
             }
           })
         },
         digivices: {
           connect: args?.data?.digivices?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
         digimentals: {
           connect: args?.data?.digimentals?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
         partners: {
           connect: args?.data?.partners?.map(p => {
             return {
-              where: {
-                id: parseInt(p.id)
-              }
+              id: parseInt(p.id)
             }
           })
         },
         universes: {
           connect: args?.data?.universes?.map(u => {
             return {
-              where: {
-                id: parseInt(u.id)
-              }
+              id: parseInt(u.id)
             }
           })
         },
@@ -883,7 +829,7 @@ const resolvers = {
       const oDigimentals = await currentCharacter.digimentals()
       const oPartners = await currentCharacter.partners()
       const oUniverses = await currentCharacter.universes()
-      return prisma.series.update({
+      return prisma.character.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -957,7 +903,7 @@ const resolvers = {
           id: parseInt(args.data.id)
         }
       }).digiDestined()
-      return prisma.series.update({
+      return prisma.digivice.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -980,9 +926,7 @@ const resolvers = {
         digiDestineds: {
           connect: args?.data?.digiDestineds?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         },
@@ -1001,7 +945,7 @@ const resolvers = {
       })
       const oDigiDestineds = await currentCrest.digiDestineds()
       const oDigimental = await currentCrest.digimental()
-      return prisma.series.update({
+      return prisma.crest.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -1031,9 +975,7 @@ const resolvers = {
         digimon: {
           connect: args?.data?.digimon?.map(d => {
             return {
-              where: {
-                id: parseInt(d.id)
-              }
+              id: parseInt(d.id)
             }
           })
         }
@@ -1047,7 +989,7 @@ const resolvers = {
       })
       const oDigiDestined = await currentDigimental.digiDestined()
       const oDigimon = await currentDigimental.digimon()
-      return prisma.series.update({
+      return prisma.digimental.update({
         where: {
           id: parseInt(args.data.id)
         },
@@ -1089,7 +1031,7 @@ const resolvers = {
       })
       const oDigiDestined = await currentSpirit.digiDestined()
       const oDigimon = await currentSpirit.digimon()
-      return prisma.series.update({
+      return prisma.spirit.update({
         where: {
           id: parseInt(args.data.id)
         },
