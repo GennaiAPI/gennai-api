@@ -208,15 +208,15 @@ const resolvers = {
       }
     }),
     // Spirit
-    getSpirits: (prt, args, ctx, info) => prisma.digivice.findMany({
+    getSpirits: (prt, args, ctx, info) => prisma.spirit.findMany({
       ...getOptions(args?.options)
     }),
-    getSpiritById: (prt, args, ctx, info) => prisma.digivice.findUnique({
+    getSpiritById: (prt, args, ctx, info) => prisma.spirit.findUnique({
       where: {
         id: args.id
       }
     }),
-    getSpiritsByElement: (prt, args, ctx, info) => prisma.digivice.findMany({
+    getSpiritsByElement: (prt, args, ctx, info) => prisma.spirit.findMany({
       ...getOptions(args?.options),
       where: {
         element: args.element
