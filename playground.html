@@ -43,6 +43,11 @@
       favored resource bundler.
      -->
     <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/graphiql-with-extensions@0.14.3/graphiqlWithExtensions.min.js"
+      integrity="sha384-TqI6gT2PjmSrnEOTvGHLad1U4Vm5VoyzMmcKK0C/PLCWTnwPyXhCJY6NYhC/tp19"
+      crossorigin="anonymous"
+    ></script>
   </head>
 
   <body>
@@ -55,9 +60,9 @@
     <script>
       function graphQLFetcher(graphQLParams) {
         return fetch(
-          `https://gennai.herokuapp.com/graphql${JSON.stringify(
+          `https://gennai.herokuapp.com/graphql?${new URLSearchParams(
             graphQLParams
-          )}`,
+          ).toString()}`,
           {
             method: "get",
             headers: {
@@ -73,7 +78,7 @@
       }
 
       ReactDOM.render(
-        React.createElement(GraphiQL, {
+        React.createElement(GraphiQLWithExtensions.GraphiQLWithExtensions, {
           fetcher: graphQLFetcher,
           defaultVariableEditorOpen: true,
         }),
