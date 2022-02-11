@@ -1345,6 +1345,11 @@ const resolvers = {
         id: parent.id
       }
     }).partners(),
+    otherNames: (parent, args, ctx, info) => prisma.character.findUnique({
+      where: {
+        id: parent.id
+      }
+    }).otherNames(),
     universes: (parent, args, ctx, info) => prisma.character.findUnique({
       where: {
         id: parent.id
