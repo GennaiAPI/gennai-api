@@ -361,64 +361,64 @@ const typeDefs = gql`
   type Query {
     # Field
     getFields(options: OptionsInput): [Field]
-    getFieldById(id: Int!, options: OptionsInput): Field!
-    getFieldByName(name: String!, options: OptionsInput): Field!
+    getFieldById(id: Int!, options: OptionsInput): Field
+    getFieldByName(name: String!, options: OptionsInput): Field
     # Rank
     getRanks(options: OptionsInput): [Rank]
-    getRankById(id: Int!, options: OptionsInput): Rank!
-    getRankByName(name: String!, options: OptionsInput): Rank!
+    getRankById(id: Int!, options: OptionsInput): Rank
+    getRankByName(name: String!, options: OptionsInput): Rank
     # Attribute
     getAttributes(options: OptionsInput): [Attribute]
-    getAttributeById(id: Int!, options: OptionsInput): Attribute!
-    getAttributeByName(name: String!, options: OptionsInput): Attribute!
+    getAttributeById(id: Int!, options: OptionsInput): Attribute
+    getAttributeByName(name: String!, options: OptionsInput): Attribute
     # Type
     getTypes(options: OptionsInput): [Type]
-    getTypeById(id: Int!, options: OptionsInput): Type!
-    getTypeByName(name: String!, options: OptionsInput): Type!
+    getTypeById(id: Int!, options: OptionsInput): Type
+    getTypeByName(name: String!, options: OptionsInput): Type
     # Digimo
     getDigimon(options: OptionsInput): [Digimon]
-    getDigimonById(id: Int!, options: OptionsInput): Digimon!
-    getDigimonByName(name: String!, options: OptionsInput): Digimon!
+    getDigimonById(id: Int!, options: OptionsInput): Digimon
+    getDigimonByName(name: String!, options: OptionsInput): Digimon
     # DigimonGroup
     getDigimonGroups(options: OptionsInput): [DigimonGroup]
-    getDigimonGroupById(id: Int!, options: OptionsInput): DigimonGroup!
-    getDigimonGroupByName(name: String!, options: OptionsInput): DigimonGroup!
+    getDigimonGroupById(id: Int!, options: OptionsInput): DigimonGroup
+    getDigimonGroupByName(name: String!, options: OptionsInput): DigimonGroup
     # Universe
     getUniverses(options: OptionsInput): [Universe]
-    getUniverseById(id: Int!, options: OptionsInput): Universe!
-    getUniverseByName(name: String!, options: OptionsInput): Universe!
+    getUniverseById(id: Int!, options: OptionsInput): Universe
+    getUniverseByName(name: String!, options: OptionsInput): Universe
     # Serie
     getSeries(options: OptionsInput): [Series]
-    getSeriesById(id: Int!, options: OptionsInput): Series!
+    getSeriesById(id: Int!, options: OptionsInput): Series
     getSeriesByTitle(title: String!, options: OptionsInput): Series
     # Episode
     getEpisodes(options: OptionsInput): [Episode]
-    getEpisodeById(id: Int!, options: OptionsInput): Episode!
+    getEpisodeById(id: Int!, options: OptionsInput): Episode
     getEpisodeByTitle(title: String!, options: OptionsInput): Episode
     # Movie
     getMovies(options: OptionsInput): [Movie]
-    getMovieById(id: Int!, options: OptionsInput): Movie!
+    getMovieById(id: Int!, options: OptionsInput): Movie
     getMovieByTitle(title: String!, options: OptionsInput): Movie
     # Character
     getCharacters(options: OptionsInput): [Character]
-    getCharacterById(id: Int!, options: OptionsInput): Character!
+    getCharacterById(id: Int!, options: OptionsInput): Character
     getCharacterByName(name: String!, options: OptionsInput): Character!
     # Digivice
     getDigivices(options: OptionsInput): [Digivice]
-    getDigiviceById(id: Int!, options: OptionsInput): Digivice!
+    getDigiviceById(id: Int!, options: OptionsInput): Digivice
     getDigivicesByType(type: DigiviceType!, options: OptionsInput): [Digivice]
     getDigiviceTypes(options: OptionsInput): [DigiviceType]
     # Crest
     getCrests(options: OptionsInput): [Crest]
-    getCrestById(id: Int!, options: OptionsInput): Crest!
-    getCrestByName(name: String!, options: OptionsInput): Crest!
+    getCrestById(id: Int!, options: OptionsInput): Crest
+    getCrestByName(name: String!, options: OptionsInput): Crest
     # Digimental
     getDigimentals(options: OptionsInput): [Digimental]
-    getDigimentalById(id: Int!, options: OptionsInput): Digimental!
-    getDigimentalByName(name: String!, options: OptionsInput): Digimental!
+    getDigimentalById(id: Int!, options: OptionsInput): Digimental
+    getDigimentalByName(name: String!, options: OptionsInput): Digimental
     # Spirit
     getSpirits(options: OptionsInput): [Spirit]
-    getSpiritById(id: Int!, options: OptionsInput): Spirit!
+    getSpiritById(id: Int!, options: OptionsInput): Spirit
     getSpiritsByElement(element: SpiritElement!, options: OptionsInput): [Spirit]
     getSpiritElements(options: OptionsInput): [SpiritElement]
   }
