@@ -17,14 +17,14 @@ model Field {
 
 model Rank {
   id          Int       @id @default(autoincrement())
-  name        String    @db.VarChar(255)
+  name        String    @unique @db.VarChar(255)
   description String
   digimon     Digimon[]
 }
 
 model Attribute {
   id          Int         @id @default(autoincrement())
-  name        String      @db.VarChar(255)
+  name        String      @unique @db.VarChar(255)
   symbol      String      @db.VarChar(255)
   description String
   strong      Attribute[] @relation("AttrWeakStrong", references: [id])
@@ -34,7 +34,7 @@ model Attribute {
 
 model Type {
   id      Int       @id @default(autoincrement())
-  name    String    @db.VarChar(255)
+  name    String    @unique @db.VarChar(255)
   digimon Digimon[]
 }
 
@@ -81,7 +81,7 @@ model DigimonGroup {
 
 model Universe {
   id         Int         @id @default(autoincrement())
-  name       String      @db.VarChar(255)
+  name       String      @unique @db.VarChar(255)
   series     Series[]
   movies     Movie[]
   characters Character[]
@@ -89,7 +89,7 @@ model Universe {
 
 model Series {
   id              Int         @id @default(autoincrement())
-  title           String      @db.VarChar(255)
+  title           String      @unique @db.VarChar(255)
   synopsis        String
   originalAirDate DateTime
   episodes        Episode[]
@@ -101,7 +101,7 @@ model Series {
 
 model Episode {
   id              Int         @id @default(autoincrement())
-  title           String      @db.VarChar(255)
+  title           String      @unique @db.VarChar(255)
   synopsis        String
   originalAirDate DateTime
   digimon         Digimon[]
@@ -112,7 +112,7 @@ model Episode {
 
 model Movie {
   id              Int         @id @default(autoincrement())
-  title           String      @db.VarChar(255)
+  title           String      @unique @db.VarChar(255)
   synopsis        String
   originalAirDate DateTime
   digimon         Digimon[]
@@ -123,7 +123,7 @@ model Movie {
 
 model Character {
   id             Int             @id @default(autoincrement())
-  name           String          @db.VarChar(255)
+  name           String          @unique @db.VarChar(255)
   isDigiDestined Boolean
   movies         Movie[]
   series         Series[]
@@ -166,7 +166,7 @@ enum DigiviceType {
 
 model Crest {
   id            Int         @id @default(autoincrement())
-  name          String      @db.VarChar(255)
+  name          String      @unique @db.VarChar(255)
   description   String
   digiDestineds Character[]
   digimental    Digimental  @relation(fields: [digimentalId], references: [id])
@@ -175,7 +175,7 @@ model Crest {
 
 model Digimental {
   id             Int       @id @default(autoincrement())
-  name           String    @db.VarChar(255)
+  name           String    @unique @db.VarChar(255)
   description    String
   attribute      String
   digiDestined   Character @relation(fields: [digiDestinedId], references: [id])
