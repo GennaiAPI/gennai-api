@@ -7,75 +7,137 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator docs {
+  provider = "node node_modules/prisma-docs-generator"
+}
+
+/// Field of a digimon
 model Field {
+  /// Id of the field
   id          Int       @id @default(autoincrement())
+  /// Name of the field
   name        String    @unique @db.VarChar(255)
+  /// Symbol of the field
   symbol      String    @db.VarChar(255)
+  /// Description of the field
   description String
+  /// List of digimon that belongs to the field
   digimon     Digimon[]
 }
 
+/// Rank of a digimon
 model Rank {
+  /// Id of the rank
   id          Int       @id @default(autoincrement())
+  /// Name of the rank
   name        String    @unique @db.VarChar(255)
+  /// Description of the rank
   description String
+  /// List of digimon that belongs to the rank
   digimon     Digimon[]
 }
 
+/// Attribute of a digimon
 model Attribute {
+  /// Id of the attribute
   id          Int         @id @default(autoincrement())
+  /// Name of the attribute
   name        String      @unique @db.VarChar(255)
+  /// Symbol of the attribute
   symbol      String      @db.VarChar(255)
+  /// Description of the attribute
   description String
+  /// List of attributes that this attribute is strong against
   strong      Attribute[] @relation("AttrWeakStrong", references: [id])
+  /// List of attributes that this attribute is weaker against
   weak        Attribute[] @relation("AttrWeakStrong", references: [id])
+  /// List of digimon that belongs to the rank
   digimon     Digimon[]
 }
 
+/// Type of a digimon
 model Type {
+  /// Id of the type
   id      Int       @id @default(autoincrement())
+  /// Name of the type
   name    String    @unique @db.VarChar(255)
+  /// List of digimon that belongs to the type
   digimon Digimon[]
 }
 
+/// Creatures made of data
 model Digimon {
+  /// Id of the digimon
   id           Int            @id @default(autoincrement())
+  /// Slug of the digimon
   slug         String         @unique @db.VarChar(255)
+  /// Name of the digimon
   name         String         @unique @db.VarChar(255)
+  /// True if the digimon is a Jogress, false if not
   isJogress    Boolean        @default(false)
+  /// True if the digimon has a X Antibody, false if not
   hasXAntibody Boolean        @default(false)
+  /// Rank of the digimon
   rank         Rank           @relation(fields: [rankId], references: [id])
+  /// Id of the rank of the digimon
   rankId       Int
+  /// Attribute of the digimon
   attribute    Attribute      @relation(fields: [attributeId], references: [id])
+  /// Id of the attribute of the digimon
   attributeId  Int
+  /// Type of the digimon
   type         Type?          @relation(fields: [typeId], references: [id])
+  /// Id of the type of the digimon
   typeId       Int?
+  /// Digimental of the digimon
   digimental   Digimental?    @relation(fields: [digimentalId], references: [id])
+  /// Id of the digimental of the digimon
   digimentalId Int?
+  /// List of movies that the digimon appears
   movies       Movie[]
+  /// List of series that the digimon appears
   series       Series[]
+  /// List of episodes that the digimon appears
   episodes     Episode[]
+  /// List of fields that the digimon belongs
   fields       Field[]
+  /// List of spirits that the digimon contains
   spirits      Spirit[]
+  /// List of partners that the digimon already had
   partners     Character[]
+  /// List of digimon that can envolve into the digimon
   previous     Digimon[]      @relation("PreviousNext", references: [id])
+  /// List of digimon that the digimon can envolve into
   next         Digimon[]      @relation("PreviousNext", references: [id])
+  /// List of groups that the digimon belongs to
   groups       DigimonGroup[]
+  /// List of different name that the digimon have
   otherNames   DigimonName[]
 }
 
+/// Name variation of a digimon
 model DigimonName {
+  /// Id of the digimon name
   id        Int     @id @default(autoincrement())
+  /// Language wich the digimon name belongs
   lang      String
+  /// Another name of a digimon
   name      String
+  /// Digimon whom belongs
   digimon   Digimon @relation(fields: [digimonId], references: [id])
+  /// Id of the digimon whom belongs
   digimonId Int
 }
 
+/// Group of digimon
 model DigimonGroup {
+  /// Id of the digimon group
   id          Int       @id @default(autoincrement())
+  /// Name of the digimon group
   name        String    @unique
+  /// Description of the digimon group
   description String
+  /// List of digimon that belongs to the group
   digimon     Digimon[]
 }
 
