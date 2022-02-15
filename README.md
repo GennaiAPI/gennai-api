@@ -1,5 +1,5 @@
 
-[Gennai API](./gennai-logo.svg)
+![Gennai API](./gennai-logo.svg)
 
 # Gennai API
 
