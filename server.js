@@ -12,6 +12,8 @@ const startServer = async () => {
 
   app.use('/playground', express.static('playground.html'))
 
+  app.use('/docs', express.static('prisma/docs'))
+
   app.use(cors({
     preflightContinue: true,
     credentials: true,
