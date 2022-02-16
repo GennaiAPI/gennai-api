@@ -13,7 +13,7 @@ generator docs {
 
 /// Field of a digimon
 model Field {
-  /// Id of the field
+  /// Identifier of the field
   id          Int       @id @default(autoincrement())
   /// Name of the field
   name        String    @unique @db.VarChar(255)
@@ -27,7 +27,7 @@ model Field {
 
 /// Rank of a digimon
 model Rank {
-  /// Id of the rank
+  /// Identifier of the rank
   id          Int       @id @default(autoincrement())
   /// Name of the rank
   name        String    @unique @db.VarChar(255)
@@ -39,7 +39,7 @@ model Rank {
 
 /// Attribute of a digimon
 model Attribute {
-  /// Id of the attribute
+  /// Identifier of the attribute
   id          Int         @id @default(autoincrement())
   /// Name of the attribute
   name        String      @unique @db.VarChar(255)
@@ -47,7 +47,7 @@ model Attribute {
   symbol      String      @db.VarChar(255)
   /// Description of the attribute
   description String
-  /// List of attributes that this attribute is strong against
+  /// List of attributes that this attribute is stronger against
   strong      Attribute[] @relation("AttrWeakStrong", references: [id])
   /// List of attributes that this attribute is weaker against
   weak        Attribute[] @relation("AttrWeakStrong", references: [id])
@@ -57,7 +57,7 @@ model Attribute {
 
 /// Type of a digimon
 model Type {
-  /// Id of the type
+  /// Identifier of the type
   id      Int       @id @default(autoincrement())
   /// Name of the type
   name    String    @unique @db.VarChar(255)
@@ -111,13 +111,13 @@ model Digimon {
   next         Digimon[]      @relation("PreviousNext", references: [id])
   /// List of groups that the digimon belongs to
   groups       DigimonGroup[]
-  /// List of different name that the digimon have
+  /// List of different names that the digimon have
   otherNames   DigimonName[]
 }
 
 /// Name variation of a digimon
 model DigimonName {
-  /// Id of the digimon name
+  /// Identifier of the digimon name
   id        Int     @id @default(autoincrement())
   /// Language wich the digimon name belongs
   lang      String
@@ -125,13 +125,13 @@ model DigimonName {
   name      String
   /// Digimon whom belongs
   digimon   Digimon @relation(fields: [digimonId], references: [id])
-  /// Id of the digimon whom belongs
+  /// Identifier of the digimon whom belongs
   digimonId Int
 }
 
 /// Group of digimon
 model DigimonGroup {
-  /// Id of the digimon group
+  /// Identifier of the digimon group
   id          Int       @id @default(autoincrement())
   /// Name of the digimon group
   name        String    @unique
@@ -141,77 +141,137 @@ model DigimonGroup {
   digimon     Digimon[]
 }
 
+/// Sort of a timeline, or diferente universe
 model Universe {
+  /// Identifier of the universe
   id         Int         @id @default(autoincrement())
+  /// Name of the universe
   name       String      @unique @db.VarChar(255)
+  /// List of series that belongs to the universe
   series     Series[]
+  /// List of movies that belongs to the universe
   movies     Movie[]
+  /// List of characters that appears in the universe
   characters Character[]
 }
 
+/// Animated series of the franchise
 model Series {
+  /// Identifier of the series
   id              Int         @id @default(autoincrement())
+  /// Title of the series
   title           String      @unique @db.VarChar(255)
+  /// Synopsis of the series
   synopsis        String
+  /// Original air date of the series
   originalAirDate DateTime
+  /// List of episodes that belongs to the series
   episodes        Episode[]
+  /// List of digimon that appears in the series
   digimon         Digimon[]
+  /// List of characters that appears in the series
   characters      Character[]
+  /// Universe whom belongs
   universe        Universe    @relation(fields: [universeId], references: [id])
+  /// Identifier of the universe whom belongs
   universeId      Int
 }
 
+/// Episode of the animated series
 model Episode {
+  /// Identifier of the episode
   id              Int         @id @default(autoincrement())
+  /// Title of the episode
   title           String      @unique @db.VarChar(255)
+  /// Synopsis of the episode
   synopsis        String
+  /// Original air date of the episode
   originalAirDate DateTime
+  /// List of digimon that appears in the episode
   digimon         Digimon[]
+  /// List of characters that appears in the episode
   characters      Character[]
+  /// Series whom belongs
   series          Series      @relation(fields: [seriesId], references: [id])
+  /// Identifier of the series whom belongs
   seriesId        Int
 }
 
+/// Movie of the franchise
 model Movie {
+  /// Identifier of the movie
   id              Int         @id @default(autoincrement())
+  /// Title of the movie
   title           String      @unique @db.VarChar(255)
+  /// Synopsis of the movie
   synopsis        String
+  /// Original air date of the movie
   originalAirDate DateTime
+  /// List of digimon that appears in the movie
   digimon         Digimon[]
+  /// List of characters that appears in the movie
   characters      Character[]
+  /// Universe whom belongs
   universe        Universe    @relation(fields: [universeId], references: [id])
+  /// Identifier of the universe whom belongs
   universeId      Int
 }
 
+/// Character that appears on the franchise
 model Character {
+  /// Identifier of the character
   id             Int             @id @default(autoincrement())
+  /// Name of the character
   name           String          @unique @db.VarChar(255)
+  /// True if the character is a digiDestined, false if not
   isDigiDestined Boolean
+  /// List of movies that the character appears
   movies         Movie[]
+  /// List of series that the character appears
   series         Series[]
+  /// List of episodes that the character appears
   episodes       Episode[]
+  /// List of crests that the character has
   crests         Crest[]
+  /// List of spirits that belongs to the character
   spirits        Spirit[]
+  /// List of digivices that belongs to the character
   digivices      Digivice[]
+  /// List of digimentals that belongs to the character
   digimentals    Digimental[]
+  /// List of digimon partners that belongs to the character
   partners       Digimon[]
+  /// List of universes that the character appears
   universes      Universe[]
+  /// List of different names that the character have
   otherNames     CharacterName[]
 }
 
+/// Name variation of a character
 model CharacterName {
+  /// Identifier of the character name
   id          Int       @id @default(autoincrement())
+  /// Language wich the character name belongs
   lang        String
+  /// Another name of a character
   name        String
+  /// Character whom belongs
   character   Character @relation(fields: [characterId], references: [id])
+  /// Identifier of the character whom belongs
   characterId Int
 }
 
+/// Device that can evolve digimon
 model Digivice {
+  /// Identifier of the digivice
   id             Int          @id @default(autoincrement())
+  /// Character whom belongs
   digiDestined   Character    @relation(fields: [digiDestinedId], references: [id])
+  /// Identifier of the character whom belongs
   digiDestinedId Int
+  /// List of colors of the digivice
   colors         String[]     @db.VarChar(255)
+  /// Type of the digivice
   type           DigiviceType
 }
 
@@ -226,33 +286,57 @@ enum DigiviceType {
   BIO_HYBRID
 }
 
+/// Items that representate a digimental or trait
 model Crest {
+  /// Identifier of the crest
   id            Int         @id @default(autoincrement())
+  /// Name of the crest
   name          String      @unique @db.VarChar(255)
+  /// Description of the crest
   description   String
+  /// List of characters that owns the crest
   digiDestineds Character[]
+  /// Digimental whom belongs
   digimental    Digimental  @relation(fields: [digimentalId], references: [id])
+  /// Identifier of the digimental whom belongs
   digimentalId  Int         @unique
 }
 
+/// Rare and ancient items that are used to armor evolution a digimon
 model Digimental {
+  /// Identifier of the digimental
   id             Int       @id @default(autoincrement())
+  /// Name of the digimental
   name           String    @unique @db.VarChar(255)
+  /// Description of the digimental
   description    String
+  /// Attribute of the digimental
   attribute      String
+  /// Character whom belongs
   digiDestined   Character @relation(fields: [digiDestinedId], references: [id])
+  /// Identifier of the character whom belongs
   digiDestinedId Int
+  /// List of digimon that holds this digimental
   digimon        Digimon[]
+  /// Crest created from this digimental
   crest          Crest?
 }
 
+/// Ancient artifacta that is used to evolve into hybrid digimon
 model Spirit {
+  /// Identifier of the spirit
   id             Int           @id @default(autoincrement())
+  /// Element of the spirit
   element        SpiritElement
+  /// True if the spirit is human, false if the spirit is beast
   isHuman        Boolean
+  /// Character whom belongs
   digiDestined   Character     @relation(fields: [digiDestinedId], references: [id])
+  /// Identifier of the character whom belongs
   digiDestinedId Int
+  /// Digimon whom belongs
   digimon        Digimon       @relation(fields: [digimonId], references: [id])
+  /// Identifier of the digimon whom belongs
   digimonId      Int
 }
 
