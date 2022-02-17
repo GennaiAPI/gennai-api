@@ -10,6 +10,9 @@ The goal of the Gennai API is to gather all the data about the Digimon franchise
 
 So far, this API only contains data from the Adventure universe (see below), but the main goal is to gather all data from every other universe. 
 
+## Documentation
+All the documentation about the Gennai API can be found [here](https://gennai-api.vercel.app/). As well as a playground for testing.
+
 ## Universe
 Since many works of the franchise take place in different universes, a classification is being used to differentiate conflictual data. For example, the Adventure universe contains data from the series Digimon Adventure and Digimon Adventure Zero-Two, since both are connected and take place on the same universe, which is not the case of Digimon Tamers or Digimon Frontier.
 
@@ -26,7 +29,7 @@ For now, there is only 5 universes in totality, with only 1 (Adventure) working.
 
 | Enviroment | Repository |
 | --- | --- |
-| NodeJS | [Gennai Node](https://github.com/GuiPretto/gennai-node) |
+| NodeJS | [Gennai Node](https://github.com/GennaiAPI/gennai-node) |
 
 ## Future
 This project is in early development stage, which means that a lot may change. From database structure to even switch to statically serve the data, but besides these core changes, somethings are already planned to be made in the future, such as:
